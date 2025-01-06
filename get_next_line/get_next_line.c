@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:41:16 by yrachidi          #+#    #+#             */
-/*   Updated: 2024/12/04 18:33:10 by yrachidi         ###   ########.fr       */
+/*   Created: 2025/01/06 14:13:19 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/01/06 14:16:23 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_after(char *buffer)
 		return (NULL);
 	line_location++;
 	len = ft_strlen(line_location);
-	after = ft_calloc(len + 1, 1);//had ster
+	after = ft_calloc(len + 1, 1);
 	if (!after)
 		return (ft_free(&buffer), NULL);
 	ft_memcpy(after, line_location, len);
@@ -75,7 +75,7 @@ char	*get_full_line(int fd, char *rbuf)
 		if (return_bytes == 0)
 			break ;
 		buffer[return_bytes] = '\0';
-		tmp = ft_strjoin(rbuf, buffer);//had ster
+		tmp = ft_strjoin(rbuf, buffer);
 		ft_free(&rbuf);
 		rbuf = tmp;
 		if (!rbuf)
@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;
-	char 		*remaining;
+	char		*remaining;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
@@ -115,4 +115,3 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	return (line);
 }
-

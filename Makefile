@@ -1,32 +1,39 @@
 NAME = fdf
-CC = gcc
-CFLAGS = -Os -Ofast -Wall -Wextra -Werror
-MLX_FLAGS = -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz 
-SRCS = fdf_initialization.c \
-    fdf_utils.c \
-    fdf_events.c \
-    fdf_drawing.c \
-    fdf_transform.c \
-    fdf_map.c \
-    main.c \
-    get_next_line/get_next_line.c \
-    get_next_line/get_next_line_utils.c
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+FRAMEWORKS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz 
+MLX = libmlx.a
+
+SRCS = main.c \
+       fdf_events.c \
+       fdf_file_utils.c \
+       fdf_height.c \
+       fdf_init.c \
+       fdf_draw.c \
+       fdf_line.c \
+       fdf_pixel.c \
+       fdf_transform.c \
+       fdf_utils.c \
+       ft_split.c \
+       fdf_points.c \
+       get_next_line/get_next_line.c \
+       get_next_line/get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c
-    $(CC) $(CFLAGS) -Imlx_linux -c $< -o $@
-
 $(NAME): $(OBJS)
-    $(CC) $(CFLAGS) $(OBJS) libmlx.a $(MLX_FLAGS) -o $@
+		$(CC) $(OBJS) $(MLX) $(FRAMEWORKS) -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-    rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-    rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

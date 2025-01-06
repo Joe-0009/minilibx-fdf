@@ -1,30 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_line.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/06 14:15:14 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/01/06 14:15:20 by yrachidi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
-
-void	put_pixel(t_vars *vars, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-	{
-		dst = vars->img.addr + (y * vars->img.line_length + x
-				* (vars->img.bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
-	}
-}
-
-int	interpolate_color(int color1, int color2, float fraction)
-{
-	int	red;
-	int	green;
-	int	blue;
-
-	red = ((1 - fraction) * ((color1 >> 16) & 0xFF)) + (fraction
-			* ((color2 >> 16) & 0xFF));
-	green = ((1 - fraction) * ((color1 >> 8) & 0xFF)) + (fraction
-			* ((color2 >> 8) & 0xFF));
-	blue = ((1 - fraction) * (color1 & 0xFF)) + (fraction * (color2 & 0xFF));
-	return ((red << 16) | (green << 8) | blue);
-}
 
 void	draw_line_low_slope(t_vars *vars, int dx, int dy, t_point *a,
 		t_point *b)
@@ -65,7 +51,6 @@ void	draw_line_high_slope(t_vars *vars, int dx, int dy, t_point *a,
 	int		i;
 	float	fraction;
 
-	fraction = 0.05;
 	i = -1;
 	p = 2 * abs(dx) - abs(dy);
 	put_pixel(vars, a->x, a->y, a->color);
@@ -102,33 +87,4 @@ void	draw_line(t_vars *vars, t_point a, t_point b)
 		draw_line_low_slope(vars, dx, dy, &a, &b);
 	else
 		draw_line_high_slope(vars, dx, dy, &a, &b);
-}
-
-void	main_draw(t_vars *vars, t_point **points, t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width - 1)
-		{
-			draw_line(vars, points[i][j], points[i][j + 1]);
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	while (i < map->height - 1)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-			draw_line(vars, points[i][j], points[i + 1][j]);
-			j++;
-		}
-		i++;
-	}
 }
