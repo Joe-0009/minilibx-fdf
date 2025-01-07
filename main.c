@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:18 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:47:41 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:59:52 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(int argc, char **argv)
 {
 	t_vars	vars;
 	t_map	map;
-	t_point	**points;
 
 	if (argc != 2)
 	{
@@ -24,16 +23,19 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	map = map_dimension(argv[1]);
-	points = points_init(&map);
-	parse_map(points, argv[1], &map);
-	iso_points(points, &map);
+	vars.points = points_init(&map);
+	parse_map(vars.points, argv[1], &map);
+	iso_points(vars.points, &map);
 	vars.window_name = argv[1];
 	init_fdf(&vars);
 	create_image(&vars);
-	main_draw(&vars, points, &map);
+	main_draw(&vars, vars.points, &map);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
+	vars.dim.height = map.dim.height;
 	mlx_hooks(&vars, argv[1]);
 	mlx_loop(vars.mlx);
-	free_points(&map, points);
+	cleanup_image(&vars);
+    cleanup_window(&vars);
+    free_points(vars.dim.height, vars.points);
 	return (0);
 }

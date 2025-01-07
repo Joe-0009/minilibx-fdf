@@ -6,11 +6,24 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:34:09 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 15:21:25 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 16:10:08 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	free_points(int map_height, t_point **points)
+{
+	int	i;
+
+	i = 0;
+	if (points)
+	{
+		while (i < map_height)
+			free(points[i++]);
+		free(points);
+	}
+}
 
 static void	create_point(t_point *point, char **color_split,
 		t_map_context *context)
@@ -30,18 +43,27 @@ static void	create_point(t_point *point, char **color_split,
 static void	parse_line(char *line, t_point **points, t_map_context *context)
 {
 	char	**split;
+	char	**color_split;
 	int		j;
 
-	j = 0;
+	j = -1;
 	split = ft_split(line, ' ');
-	while (split[j])
+	if (!split)
+		return ;
+	while (split[++j])
 	{
+		color_split = ft_split(split[j], ',');
+		if (!color_split)
+		{
+			ft_free_strs(split);
+			free(line);
+			return ;
+		}
 		context->j = j;
-		create_point(&points[context->i][j], ft_split(split[j], ','), context);
-		j++;
+		create_point(&points[context->i][j], color_split, context);
+		ft_free_strs(color_split);
 	}
 	ft_free_strs(split);
-	free(line);
 }
 
 void	parse_map(t_point **points, char *file_name, t_map *map)
@@ -60,22 +82,10 @@ void	parse_map(t_point **points, char *file_name, t_map *map)
 	{
 		parse_line(line, points, &context);
 		context.i++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-}
-
-void	free_points(t_map *map, t_point **points)
-{
-	int	i;
-
-	i = 0;
-	if (points)
-	{
-		while (i < map->dim.height)
-			free(points[i++]);
-		free(points);
-	}
 }
 
 t_point	**points_init(t_map *map)

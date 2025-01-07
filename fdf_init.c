@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:15:11 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:00:57 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,21 @@ static void	cleanup_mlx(t_vars *vars)
 {
 	if (vars->mlx)
 	{
+		mlx_destroy_display(vars->mlx);
 		free(vars->mlx);
 		vars->mlx = NULL;
 	}
 }
+void	cleanup_image(t_vars *vars)
+{
+	if (vars->img.img)
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		vars->img.img = NULL;
+	}
+}
 
-static void	cleanup_window(t_vars *vars)
+void	cleanup_window(t_vars *vars)
 {
 	if (vars->win)
 	{
@@ -31,21 +40,16 @@ static void	cleanup_window(t_vars *vars)
 	cleanup_mlx(vars);
 }
 
-static void	handle_init_error(void)
-{
-	exit(EXIT_FAILURE);
-}
-
 void	init_fdf(t_vars *vars)
 {
 	vars->mlx = mlx_init();
 	if (!vars->mlx)
-		handle_init_error();
+		exit(EXIT_FAILURE);
 	vars->win = mlx_new_window(vars->mlx, WIDTH, HEIGHT, vars->window_name);
 	if (!vars->win)
 	{
 		cleanup_mlx(vars);
-		handle_init_error();
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -55,7 +59,8 @@ void	create_image(t_vars *vars)
 	if (!vars->img.img)
 	{
 		cleanup_window(vars);
-		handle_init_error();
+		free_points(vars->dim.height, vars->points);
+		exit(EXIT_FAILURE);
 	}
 	vars->img.addr = mlx_get_data_addr(vars->img.img, &vars->img.bits_per_pixel,
 			&vars->img.line_length, &vars->img.endian);
@@ -63,6 +68,7 @@ void	create_image(t_vars *vars)
 	{
 		mlx_destroy_image(vars->mlx, vars->img.img);
 		cleanup_window(vars);
-		handle_init_error();
+		free_points(vars->dim.height, vars->points);
+		exit(EXIT_FAILURE);
 	}
 }

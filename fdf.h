@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:38:23 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:01:09 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct s_vars
 	void			*win;
 	char			*window_name;
 	t_image			img;
+	t_point			**points;
+	t_dimensions	dim;
 }					t_vars;
 
 typedef struct s_bounds
@@ -101,6 +103,9 @@ typedef struct s_bounds
 # define ERR_WIN_CREATE "Error creating window"
 # define ERR_IMG_CREATE "Error creating image"
 
+
+void	cleanup_image(t_vars *vars);
+void	cleanup_window(t_vars *vars);
 void				init_fdf(t_vars *vars);
 void				create_image(t_vars *vars);
 
@@ -115,7 +120,7 @@ void				find_height_range(char *file_name, t_map *map);
 
 // Point management
 void				parse_map(t_point **points, char *file_name, t_map *map);
-void				free_points(t_map *map, t_point **points);
+void				free_points(int map_height, t_point **points);
 t_point				**points_init(t_map *map);
 
 // Transformation

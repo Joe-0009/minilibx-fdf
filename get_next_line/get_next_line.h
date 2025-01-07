@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 14:13:26 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:13:33 by yrachidi         ###   ########.fr       */
+/*   Created: 2024/12/04 13:41:48 by yrachidi          #+#    #+#             */
+/*   Updated: 2024/12/04 18:00:54 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <fcntl.h>
 # include <limits.h>
 # include <stdint.h>
 # include <stdio.h>

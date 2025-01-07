@@ -6,11 +6,22 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:59 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:36:49 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:50:25 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	calculate_color(int height, t_height_range *range)
+{
+	float	height_percent;
+
+	if (height == 0)
+		return (0x0000FF);
+	height_percent = (float)(height - range->min) / (range->max - range->min
+			+ 0.1);
+	return (0xFFFFFF - (int)(height_percent * 0x00FFFF));
+}
 
 static void	process_height(char *str, t_height_range *height)
 {
@@ -29,6 +40,7 @@ void	find_height_range(char *file_name, t_map *map)
 	char	*line;
 	char	**split;
 	char	**color_split;
+	int		i;
 
 	map->height.min = INT_MAX;
 	map->height.max = INT_MIN;
@@ -36,29 +48,19 @@ void	find_height_range(char *file_name, t_map *map)
 	line = get_next_line(fd);
 	while (line)
 	{
+		i = -1;
 		split = ft_split(line, ' ');
-		while (*split)
+		while (split[++i])
 		{
-			color_split = ft_split(*split, ',');
+			color_split = ft_split(split[i], ',');
 			process_height(color_split[0], &map->height);
 			ft_free_strs(color_split);
-			split++;
 		}
+		ft_free_strs(split);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-}
-
-int	calculate_color(int height, t_height_range *range)
-{
-	float	height_percent;
-
-	if (height == 0)
-		return (0x0000FF);
-	height_percent = (float)(height - range->min) / (range->max - range->min
-			+ 0.1);
-	return (0xFFFFFF - (int)(height_percent * 0x00FFFF));
 }
 
 float	calculate_height_factor(t_map *map)
