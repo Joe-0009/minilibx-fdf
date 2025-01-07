@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/07 18:00:57 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:38:10 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	cleanup_image(t_vars *vars)
 	{
 		mlx_destroy_image(vars->mlx, vars->img.img);
 		vars->img.img = NULL;
+		vars->img.addr = NULL;
 	}
 }
 
 void	cleanup_window(t_vars *vars)
 {
+	cleanup_image(vars);
 	if (vars->win)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
