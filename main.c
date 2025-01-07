@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:18 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/07 17:59:52 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:28:06 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,5 @@ int	main(int argc, char **argv)
 	vars.dim.height = map.dim.height;
 	mlx_hooks(&vars, argv[1]);
 	mlx_loop(vars.mlx);
-	cleanup_image(&vars);
-    cleanup_window(&vars);
-    free_points(vars.dim.height, vars.points);
 	return (0);
 }
