@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:43:30 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 14:21:10 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:48:07 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	parallel_point_side(t_point *a)
 
 void	project_point(t_point *a, t_map *map)
 {
-	if (map->scale->projection == ISO)
-		iso_point(a, map);
-	else if (map->scale->projection == PARALLEL_TOP)
+	if (map->scale.projection == ISO)
+		iso_point(a, 0.523599);
+	else if (map->scale.projection == PARALLEL_TOP)
 		parallel_point_top(a);
-	else if (map->scale->projection == PARALLEL_FRONT)
+	else if (map->scale.projection == PARALLEL_FRONT)
 		parallel_point_front(a);
-	else if (map->scale->projection == PARALLEL_SIDE)
+	else if (map->scale.projection == PARALLEL_SIDE)
 		parallel_point_side(a);
 }
 
@@ -50,10 +50,10 @@ void	apply_projection(t_point **points, t_map *map)
 	if (!points || !map)
 		return ;
 	i = 0;
-	while (i < map->dim->height)
+	while (i < map->dim.height)
 	{
 		j = 0;
-		while (j < map->dim->width)
+		while (j < map->dim.width)
 		{
 			project_point(&points[i][j], map);
 			j++;

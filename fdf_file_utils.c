@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 14:59:13 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:38:37 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,43 @@ int	open_map_file(char *file_name)
 	return (fd);
 }
 
-t_map	map_dimension(char *file_name)
+static void map_init(t_map *map)
 {
-	t_map	map;
-	int		fd;
-	char	*line;
-	int		height;
+    map->dim.width = 0;
+    map->dim.height = 0;
+    map->scale.zoom_factor = 1.1;
+    map->scale.projection = ISO;
+    map->scale.iso_angle = 0.523599;
+    map->scale.base = 0;
+    map->scale.z_scale = 0;
+    map->center.x = 0;
+    map->center.y = 0;
+    map->center.offset_x = 0;
+    map->center.offset_y = 0;
+    map->height.min = INT_MAX;
+    map->height.max = INT_MIN;
+}
 
-	height = 0;
-	fd = open_map_file(file_name);
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (height == 0)
-			map.dim->width = ft_words_count(line, ' ');
-		height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	map.dim->height = height;
-	return (map);
+t_map    map_dimension(char *file_name)
+{
+    t_map   map;
+    int     fd;
+    char    *line;
+    int     height;
+
+    map_init(&map);
+    height = 0;
+    fd = open_map_file(file_name);
+    line = get_next_line(fd);
+    while (line)
+    {
+        if (height == 0)
+            map.dim.width = ft_words_count(line, ' ');
+        height++;
+        free(line);
+        line = get_next_line(fd);
+    }
+    close(fd);
+    map.dim.height = height;
+    return (map);
 }

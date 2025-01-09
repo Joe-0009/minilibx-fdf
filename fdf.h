@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 14:57:15 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:56:17 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,21 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIDTH 800
-# define HEIGHT 500
+# define WIDTH 1600
+# define HEIGHT 1000
+
+// keyscode
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define KEY_Q 113
+# define KEY_E 101
+# define KEY_I 105
+# define KEY_Z 122
+# define KEY_O 111
+# define KEY_ESC 65307
+
 
 typedef struct s_dimensions
 {
@@ -62,10 +75,10 @@ typedef struct s_height_range
 
 typedef struct s_map
 {
-	t_dimensions	*dim;
-	t_scale			*scale;
-	t_offset		*center;
-	t_height_range	*height;
+	t_dimensions	dim;
+	t_scale			scale;
+	t_offset		center;
+	t_height_range	height;
 }					t_map;
 
 typedef struct s_map_context
@@ -99,6 +112,7 @@ typedef struct s_vars
 	char			*window_name;
 	t_image			*img;
 	t_point			**points;
+	t_dimensions	dim;
 	t_map			*map;
 }					t_vars;
 
@@ -139,12 +153,12 @@ void				find_height_range(char *file_name, t_map *map);
 // Point management
 void				parse_map(t_point **points, char *file_name, t_map *map);
 void				free_points(int map_height, t_point **points);
-void				points_init(t_vars *vars);
+t_point				**points_init(t_map *map);
 
 // Transformation
 void				move_map(t_point **points, t_map *map, int new_offset_x,
 						int new_offset_y);
-void				iso_point(t_point *a, t_map *map);
+void				iso_point(t_point *a, float angle);
 void				iso_points(t_vars *vars);
 void				update_zoom(t_vars *vars, float zoom_delta);
 
@@ -171,5 +185,14 @@ void				main_draw(t_vars *vars);
 int					close_window_esc(int keycode, t_vars *vars);
 int					close_window_x(t_vars *vars);
 void				mlx_hooks(t_vars *vars, char *str);
+
+// rotation
+void				rotate_x(t_point *a, float angle);
+void				rotate_y(t_point *a, float angle);
+void				rotate_z(t_point *a, float angle);
+void				iso_point(t_point *a, float angle);
+void				apply_rotation(t_vars *vars, float angle, void(f)(t_point *,
+							float));
+void				draw_new_image(t_vars *vars);
 
 #endif

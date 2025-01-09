@@ -16,6 +16,7 @@ SRCS = main.c \
        fdf_parallel.c \
        fdf_utils.c \
        ft_split.c \
+       rotation.c \
        fdf_points.c \
        get_next_line/get_next_line.c \
        get_next_line/get_next_line_utils.c
@@ -36,6 +37,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean all clean
 
 .PHONY: all clean fclean re

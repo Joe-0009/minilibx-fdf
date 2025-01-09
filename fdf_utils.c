@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:46 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 13:55:54 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:22:36 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_atoi(const char *str)
 		return (0 - (sign == 1));
 	return (result * sign);
 }
+
 void	free_points(int map_height, t_point **points)
 {
 	int	i;

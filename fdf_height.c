@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:59 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 14:18:36 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:12:09 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	find_height_range(char *file_name, t_map *map)
 	char	**color_split;
 	int		i;
 
-	map->height->min = INT_MAX;
-	map->height->max = INT_MIN;
+	map->height.min = INT_MAX;
+	map->height.max = INT_MIN;
 	fd = open_map_file(file_name);
 	line = get_next_line(fd);
 	while (line)
@@ -44,7 +44,7 @@ void	find_height_range(char *file_name, t_map *map)
 		while (split[++i])
 		{
 			color_split = ft_split(split[i], ',');
-			process_height(color_split[0], map->height);
+			process_height(color_split[0], &map->height);
 			ft_free_strs(color_split);
 		}
 		ft_free_strs(split);
@@ -59,12 +59,12 @@ float	calculate_height_factor(t_map *map)
 	float	height_range;
 	float	height_factor;
 
-	height_range = map->height->max - map->height->min;
+	height_range = map->height.max - map->height.min;
 	if (height_range <= 0)
 		return (1.0);
-	if (height_range > map->dim->width)
-		height_factor = (float)map->dim->width / height_range;
-	else if (height_range < map->dim->width / 4)
+	if (height_range > map->dim.width)
+		height_factor = (float)map->dim.width / height_range;
+	else if (height_range < map->dim.width / 4)
 		height_factor = 2.0;
 	else
 		height_factor = 1.0;
@@ -79,19 +79,19 @@ void    calculate_scale(t_map *map)
     float   scale_y;
     float   height_factor;
 
-	if (map->scale->zoom_factor == 0) 
-        map->scale->zoom_factor = 1.1;
-    max_projected_width = map->dim->width + map->dim->height;
-    height_range = map->height->max - map->height->min;
+	if (map->scale.zoom_factor == 0) 
+        map->scale.zoom_factor = 1.1;
+    max_projected_width = map->dim.width + map->dim.height;
+    height_range = map->height.max - map->height.min;
     height_factor = calculate_height_factor(map);
-    scale_x = (WIDTH / (max_projected_width * 1.5)) * map->scale->zoom_factor;
+    scale_x = (WIDTH / (max_projected_width * 1.5)) * map->scale.zoom_factor;
     scale_y = (HEIGHT / ((max_projected_width * sin(0.523599)) + 
-              (height_range * height_factor))) * map->scale->zoom_factor;
+              (height_range * height_factor))) * map->scale.zoom_factor;
     if (scale_x < scale_y)
-        map->scale->base = scale_x;
+        map->scale.base = scale_x;
     else
-        map->scale->base = scale_y;
-    map->scale->base *= 1.1;
-    map->scale->z_scale = map->scale->base * height_factor;
-    map->scale->iso_angle = 0.523599;
+        map->scale.base = scale_y;
+    map->scale.base *= 1.1;
+    map->scale.z_scale = map->scale.base * height_factor;
+    map->scale.iso_angle = 0.523599;
 }

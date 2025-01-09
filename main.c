@@ -6,15 +6,25 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:18 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 15:01:34 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:22:30 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-
-
 
 #include "fdf.h"
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)b;
+	while (len > 0)
+	{
+		p[len - 1] = c;
+		len--;
+	}
+	return (b);
+}
 
 int main(int ac, char **av)
 {
@@ -22,15 +32,16 @@ int main(int ac, char **av)
     t_map map;
 
     if (ac != 2)
-		return (0);
-
+	{
+        return (0);
+	}
 	vars.window_name = av[1];
-    map = map_dimension(av[1]);
-    vars.map->dim = map.dim;
+    map = map_dimension(vars.window_name);
     vars.map = &map;
-	points_init(&vars);
+    vars.points = points_init(&map);
     if (!vars.points)
         return (0);
+
     vars.mlx = mlx_init();
     if (!vars.mlx)
         return (0);
