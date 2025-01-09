@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:41 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 18:48:33 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:09:46 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	find_map_boundaries(t_point **points, t_map *map, t_bounds *bounds)
 	}
 }
 
-
-
 void	move_map(t_point **points, t_map *map, int new_offset_x, int new_offset_y)
 {
 	int			i;
@@ -68,30 +66,35 @@ void	move_map(t_point **points, t_map *map, int new_offset_x, int new_offset_y)
 	}
 }
 
-
 void    update_zoom(t_vars *vars, float zoom_delta)
 {
-    // Store previous offsets divided by previous zoom to get base offset
-    int base_offset_x = vars->map->center.offset_x / vars->map->scale.zoom_factor;
-    int base_offset_y = vars->map->center.offset_y / vars->map->scale.zoom_factor;
-    
-    // Update zoom factor
+    int base_offset_x;
+    int base_offset_y;
+
+	base_offset_x = vars->map->center.offset_x / vars->map->scale.zoom_factor;
+	base_offset_y = vars->map->center.offset_y / vars->map->scale.zoom_factor;
     vars->map->scale.zoom_factor *= zoom_delta;
-    
-    // Limit zoom range
     if (vars->map->scale.zoom_factor < 0.1)
         vars->map->scale.zoom_factor = 0.1;
     if (vars->map->scale.zoom_factor > 10.0)
         vars->map->scale.zoom_factor = 10.0;
-    
-    // Calculate new offsets based on new zoom
     vars->map->center.offset_x = base_offset_x * vars->map->scale.zoom_factor;
     vars->map->center.offset_y = base_offset_y * vars->map->scale.zoom_factor;
-    
     calculate_scale(vars->map);
     parse_map(vars->points, vars->window_name, vars->map);
     apply_projection(vars->points, vars->map);
     move_map(vars->points, vars->map, 0, 0);
+}
+
+void iso_point(t_point *a, float angle)
+{
+    int prev_x;
+    int prev_y;
+
+    prev_x = a->x;
+    prev_y = a->y;
+    a->x = (prev_x - prev_y) * cos(angle);
+    a->y = -a->z + (prev_x + prev_y) * sin(angle);
 }
 
 void    iso_points(t_vars *vars)

@@ -1,68 +1,77 @@
 
 #include "fdf.h"
 
-
-void rotate_x(t_point *a, float angle)
+static void rotate_x_axis(float *y, float *z, float angle)
 {
-    int prev_y;
-    int prev_z;
+    float temp;
 
-    prev_y = a->y;
-    prev_z = a->z;
-    a->y = prev_y * cos(angle) - prev_z * sin(angle);
-    a->z = prev_y * sin(angle) + prev_z * cos(angle);
+    temp = *y;
+    *y = temp * cos(angle) - *z * sin(angle);
+    *z = temp * sin(angle) + *z * cos(angle);
 }
 
-void rotate_y(t_point *a, float angle)
+static void rotate_y_axis(float *x, float *z, float angle)
 {
-    int prev_x;
-    int prev_z;
+    float temp;
 
-    prev_x = a->x;
-    prev_z = a->z;
-    a->x = prev_x * cos(angle) + prev_z * sin(angle);
-    a->z = -prev_x * sin(angle) + prev_z * cos(angle);
+    temp = *x;
+    *x = temp * cos(angle) + *z * sin(angle);
+    *z = -temp * sin(angle) + *z * cos(angle);
 }
 
-void rotate_z(t_point *a, float angle)
+static void rotate_z_axis(float *x, float *y, float angle)
 {
-    int prev_x;
-    int prev_y;
+    float temp;
 
-    prev_x = a->x;
-    prev_y = a->y;
-    a->x = prev_x * cos(angle) - prev_y * sin(angle);
-    a->y = prev_x * sin(angle) + prev_y * cos(angle);
+    temp = *x;
+    *x = temp * cos(angle) - *y * sin(angle);
+    *y = temp * sin(angle) + *y * cos(angle);
 }
 
-void iso_point(t_point *a, float angle)
+void rotate_point(t_point *point, float angle, char axis, t_bounds *bounds)
 {
-    int prev_x;
-    int prev_y;
+    float x;
+    float y;
+    float z;
+    float center_x;
+    float center_y;
 
-    prev_x = a->x;
-    prev_y = a->y;
-    a->x = (prev_x - prev_y) * cos(angle);
-    a->y = -a->z + (prev_x + prev_y) * sin(angle);
+    x = point->x;
+    y = point->y;
+    z = point->z;
+    center_x = (bounds->max_x + bounds->min_x) / 2.0f;
+    center_y = (bounds->max_y + bounds->min_y) / 2.0f;
+    x = x - center_x;
+    y = y - center_y;
+    if (axis == 'x')
+        rotate_x_axis(&y, &z, angle);
+    else if (axis == 'y')
+        rotate_y_axis(&x, &z, angle);
+    else
+        rotate_z_axis(&x, &y, angle);
+    point->x = (int)(x + center_x);
+    point->y = (int)(y + center_y);
+    point->z = (int)z;
 }
 
-void	apply_rotation(t_vars *vars, float angle, void(f)(t_point *, float))
+void apply_rotation(t_vars *vars, float angle, char axis)
 {
-	int	i;
-	int	j;
+    t_bounds bounds;
+    int i, j;
 
-	if (!vars->points || !vars->map)
-		return ;
-	i = 0;
-	while (i < vars->map->dim.height)
-	{
-		j = 0;
-		while (j < vars->map->dim.width)
-		{
-			f(&vars->points[i][j], angle);
-			j++;
-		}
-		i++;
-	}
+    if (!vars->points || !vars->map)
+        return;
+    find_map_boundaries(vars->points, vars->map, &bounds);
+    i = 0;
+    while (i < vars->map->dim.height)
+    {
+        j = 0;
+        while (j < vars->map->dim.width)
+        {
+            rotate_point(&vars->points[i][j], angle, axis, &bounds);
+            j++;
+        }
+        i++;
+    }
+    move_map(vars->points, vars->map, 0, 0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 18:56:17 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:26:48 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void				free_points(int map_height, t_point **points);
 t_point				**points_init(t_map *map);
 
 // Transformation
+void	find_map_boundaries(t_point **points, t_map *map, t_bounds *bounds);
 void				move_map(t_point **points, t_map *map, int new_offset_x,
 						int new_offset_y);
 void				iso_point(t_point *a, float angle);
@@ -191,8 +192,8 @@ void				rotate_x(t_point *a, float angle);
 void				rotate_y(t_point *a, float angle);
 void				rotate_z(t_point *a, float angle);
 void				iso_point(t_point *a, float angle);
-void				apply_rotation(t_vars *vars, float angle, void(f)(t_point *,
-							float));
+void rotate_point_around_center(t_point *point, float angle, char axis, t_bounds *bounds);
+void apply_rotation(t_vars *vars, float angle, char axis);
 void				draw_new_image(t_vars *vars);
 
 #endif

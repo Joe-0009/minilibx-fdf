@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 18:59:16 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:13:03 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,21 @@ int rotate(int keycode, t_vars *vars)
 {
     float angle;
 
-    angle = 0.2;
-    if (keycode == KEY_W)  
-        apply_rotation(vars, -angle, rotate_x);
-    else if (keycode == KEY_S) 
-        apply_rotation(vars, +angle, rotate_x);
-    else if (keycode == KEY_A) 
-        apply_rotation(vars, -angle, rotate_y);
-    else if (keycode == KEY_D) 
-        apply_rotation(vars, +angle, rotate_y);
-    else if (keycode == KEY_Q)  
-        apply_rotation(vars, -angle, rotate_z);
-    else if (keycode == KEY_E)
-        apply_rotation(vars, angle, rotate_z);
-    else if (keycode == KEY_I)
-        apply_rotation(vars, angle, iso_point);
-    if (keycode == KEY_W || keycode == KEY_S|| keycode == KEY_A || 
-        keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E || keycode == KEY_I)
+    angle = 0.1;  // About 5.7 degrees
+    if (keycode == KEY_W)  // Rotate up (around X-axis)
+        apply_rotation(vars, -angle, 'x');
+    else if (keycode == KEY_S)  // Rotate down (around X-axis)
+        apply_rotation(vars, angle, 'x');
+    else if (keycode == KEY_A)  // Rotate left (around Y-axis)
+        apply_rotation(vars, -angle, 'y');
+    else if (keycode == KEY_D)  // Rotate right (around Y-axis)
+        apply_rotation(vars, angle, 'y');
+    else if (keycode == KEY_Q)  // Rotate counter-clockwise (around Z-axis)
+        apply_rotation(vars, -angle, 'z');
+    else if (keycode == KEY_E)  // Rotate clockwise (around Z-axis)
+        apply_rotation(vars, angle, 'z');
+    if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A || 
+        keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E)
         draw_new_image(vars);
     return (0);
 }
