@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 13:40:15 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:19:07 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	cleanup_window(t_vars *vars)
 
 void	init_fdf(t_vars *vars)
 {
-	vars->map->scale.zoom_factor = 1.1;
-	vars->map->scale.projection = ISO;
+	vars->map->scale->zoom_factor = 1.1;
+	vars->map->scale->projection = ISO;
+	vars->map->scale->iso_angle = 0.523599;
 	parse_map(vars->points, vars->window_name, vars->map);
 	calculate_scale(vars->map);
 	apply_projection(vars->points, vars->map);
@@ -67,14 +68,14 @@ void	create_image(t_vars *vars)
 	if (!vars->img)
 	{
 		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		free_points(vars->map->dim->height, vars->points);
 		exit(EXIT_FAILURE);
 	}
 	vars->img->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	if (!vars->img->img)
 	{
 		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		free_points(vars->map->dim->height, vars->points);
 		exit(EXIT_FAILURE);
 	}
 	vars->img->addr = mlx_get_data_addr(vars->img->img,
@@ -83,7 +84,7 @@ void	create_image(t_vars *vars)
 	if (!vars->img->addr)
 	{
 		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		free_points(vars->map->dim->height, vars->points);
 		exit(EXIT_FAILURE);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 13:41:14 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:16:34 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int close_window_x(t_vars *vars)
 {
     cleanup_window(vars);
-    free_points(vars->dim.height, vars->points);
+    free_points(vars->map->dim->height, vars->points);
     exit(0);
     return (0);
 }
@@ -25,7 +25,7 @@ int close_window_esc(int keycode, t_vars *vars)
     if (keycode == 65307) // Escape key
     {
         cleanup_window(vars);
-        free_points(vars->dim.height, vars->points);
+        free_points(vars->map->dim->height, vars->points);
         exit(0);
     }
     return (0);
@@ -48,23 +48,23 @@ int handle_movement(int keycode, t_vars *vars)
     {
         total_offset_x = 0;
         total_offset_y = 0;
-        vars->map->scale.zoom_factor = 1.1;
-        vars->map->scale.projection = ISO;
+        vars->map->scale->zoom_factor = 1.1;
+        vars->map->scale->projection = ISO;
         calculate_scale(vars->map);
         parse_map(vars->points, vars->window_name, vars->map);
         iso_points(vars);
     }
     else if (keycode == 112) // 'P' key for projection change
     {
-        vars->map->scale.projection = (vars->map->scale.projection + 1) % 4;
+        vars->map->scale->projection = (vars->map->scale->projection + 1) % 4;
         calculate_scale(vars->map);
         parse_map(vars->points, vars->window_name, vars->map);
         apply_projection(vars->points, vars->map);
     }
     if ((keycode >= 65361 && keycode <= 65364) || keycode == 32 || keycode == 112)
     {
-        vars->map->center.offset_x = total_offset_x;
-        vars->map->center.offset_y = total_offset_y;
+        vars->map->center->offset_x = total_offset_x;
+        vars->map->center->offset_y = total_offset_y;
         move_map(vars->points, vars->map, total_offset_x, total_offset_y);
         cleanup_image(vars);
         create_image(vars);

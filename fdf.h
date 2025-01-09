@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 12:44:11 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:15:20 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ typedef struct s_dimensions
 	int				width;
 	int				height;
 }					t_dimensions;
-typedef enum e_projection {
-    ISO,
-    PARALLEL_TOP,
-    PARALLEL_FRONT,
-    PARALLEL_SIDE
-} t_projection;
-
+typedef enum e_projection
+{
+	ISO,
+	PARALLEL_TOP,
+	PARALLEL_FRONT,
+	PARALLEL_SIDE
+}					t_projection;
 
 typedef struct s_scale
 {
@@ -43,7 +43,7 @@ typedef struct s_scale
 	float			z_scale;
 	float			iso_angle;
 	float			zoom_factor;
-	t_projection    projection; 
+	t_projection	projection;
 }					t_scale;
 
 typedef struct s_offset
@@ -62,10 +62,10 @@ typedef struct s_height_range
 
 typedef struct s_map
 {
-	t_dimensions	dim;
-	t_scale			scale;
-	t_offset		center;
-	t_height_range	height;
+	t_dimensions	*dim;
+	t_scale			*scale;
+	t_offset		*center;
+	t_height_range	*height;
 }					t_map;
 
 typedef struct s_map_context
@@ -99,7 +99,6 @@ typedef struct s_vars
 	char			*window_name;
 	t_image			*img;
 	t_point			**points;
-	t_dimensions	dim;
 	t_map			*map;
 }					t_vars;
 
@@ -115,22 +114,22 @@ typedef struct s_bounds
 # define ERR_WIN_CREATE "Error creating window"
 # define ERR_IMG_CREATE "Error creating image"
 
-
-void	cleanup_image(t_vars *vars);
-void	cleanup_window(t_vars *vars);
+void				cleanup_image(t_vars *vars);
+void				cleanup_window(t_vars *vars);
 void				init_fdf(t_vars *vars);
 void				create_image(t_vars *vars);
 
 // File operations
+int					open_map_file(char *file_name);
 void				ft_free_strs(char **strs);
-t_map				map_dimension(char *file_name);
+void				map_dimension(t_vars *vars);
 
 // projection
-void    project_point(t_point *a, t_map *map);
-void    parallel_point_top(t_point *a);
-void    parallel_point_front(t_point *a);
-void    parallel_point_side(t_point *a);
-void    apply_projection(t_point **points, t_map *map);
+void				project_point(t_point *a, t_map *map);
+void				parallel_point_top(t_point *a);
+void				parallel_point_front(t_point *a);
+void				parallel_point_side(t_point *a);
+void				apply_projection(t_point **points, t_map *map);
 
 // Height processing
 int					calculate_color(int height, t_height_range *range);
@@ -140,13 +139,14 @@ void				find_height_range(char *file_name, t_map *map);
 // Point management
 void				parse_map(t_point **points, char *file_name, t_map *map);
 void				free_points(int map_height, t_point **points);
-t_point				**points_init(t_map *map);
+void				points_init(t_vars *vars);
 
 // Transformation
-void	move_map(t_point **points, t_map *map, int new_offset_x, int new_offset_y);
+void				move_map(t_point **points, t_map *map, int new_offset_x,
+						int new_offset_y);
 void				iso_point(t_point *a, t_map *map);
-void	iso_points(t_vars *vars);
-void    update_zoom(t_vars *vars, float zoom_delta);
+void				iso_points(t_vars *vars);
+void				update_zoom(t_vars *vars, float zoom_delta);
 
 // Utility functions
 int					ft_words_count(char const *s, char c);

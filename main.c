@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:18 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 13:09:40 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:23:41 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@
 int main(int ac, char **av)
 {
     t_vars vars;
-    t_map map;
 
     if (ac != 2)
 		return (0);
-
 	vars.window_name = av[1];
-	map = map_dimension(av[1]);
-    vars.dim = map.dim;
-    vars.map = &map;
-    vars.points = points_init(&map);
+	map_dimension(&vars);
+	points_init(&vars);
     if (!vars.points)
         return (0);
     vars.mlx = mlx_init();
@@ -39,6 +35,5 @@ int main(int ac, char **av)
         return (0);
     init_fdf(&vars);
     mlx_loop(vars.mlx);
-
     return (0);
 }
