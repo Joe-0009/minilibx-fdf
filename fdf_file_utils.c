@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 14:15:40 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:59:13 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,25 @@ int	open_map_file(char *file_name)
 	return (fd);
 }
 
-void	map_dimension(t_vars *vars)
+t_map	map_dimension(char *file_name)
 {
+	t_map	map;
 	int		fd;
 	char	*line;
 	int		height;
 
 	height = 0;
-	fd = open_map_file(vars->window_name);
+	fd = open_map_file(file_name);
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (height == 0)
-			vars->map->dim->width = ft_words_count(line, ' ');
+			map.dim->width = ft_words_count(line, ' ');
 		height++;
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	vars->map->dim->height = height;
+	map.dim->height = height;
+	return (map);
 }

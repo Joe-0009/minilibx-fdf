@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 14:15:20 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:57:15 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void				create_image(t_vars *vars);
 // File operations
 int					open_map_file(char *file_name);
 void				ft_free_strs(char **strs);
-void				map_dimension(t_vars *vars);
+t_map				map_dimension(char *file_name);
 
 // projection
 void				project_point(t_point *a, t_map *map);
