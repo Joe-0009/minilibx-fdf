@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:00 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:14:01 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:39:26 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	draw_vertical_lines(t_vars *vars, t_point **points, t_map *map)
 	}
 }
 
-void	main_draw(t_vars *vars, t_point **points, t_map *map)
+void	main_draw(t_vars *vars)
 {
-	draw_horizontal_lines(vars, points, map);
-	draw_vertical_lines(vars, points, map);
+	draw_horizontal_lines(vars, vars->points, vars->map);
+	draw_vertical_lines(vars, vars->points, vars->map);
 }

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:41 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:17:29 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:42:54 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,51 +52,64 @@ void	iso_point(t_point *a, t_map *map)
 	a->y = -a->z + (prev_x + prev_y) * sin(map->scale.iso_angle);
 }
 
-void	apply_iso_projection(t_point **points, t_map *map)
-{
-	int	i;
-	int	j;
 
-	i = 0;
-	while (i < map->dim.height)
-	{
-		j = 0;
-		while (j < map->dim.width)
-		{
-			iso_point(&points[i][j], map);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	center_map(t_point **points, t_map *map)
+void	move_map(t_point **points, t_map *map, int new_offset_x, int new_offset_y)
 {
 	int			i;
 	int			j;
 	t_bounds	bounds;
-	int			center_x;
-	int			center_y;
 
+	map->center.offset_x += new_offset_x;
+    map->center.offset_y += new_offset_y;
 	find_map_boundaries(points, map, &bounds);
-	center_x = (WIDTH - (bounds.max_x - bounds.min_x)) / 2;
-	center_y = (HEIGHT - (bounds.max_y - bounds.min_y)) / 2;
+	map->center.x = (WIDTH - (bounds.max_x - bounds.min_x)) / 2 ;
+	map->center.y = (HEIGHT - (bounds.max_y - bounds.min_y)) / 2 ;
 	i = 0;
 	while (i < map->dim.height)
 	{
 		j = 0;
 		while (j < map->dim.width)
 		{
-			points[i][j].x += center_x - bounds.min_x;
-			points[i][j].y += center_y - bounds.min_y;
+			points[i][j].x += (map->center.x - bounds.min_x + map->center.offset_x);
+			points[i][j].y += (map->center.y - bounds.min_y + map->center.offset_y);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	iso_points(t_point **points, t_map *map)
+
+void    update_zoom(t_vars *vars, float zoom_delta)
 {
-	apply_iso_projection(points, map);
-	center_map(points, map);
+    // Store previous offsets divided by previous zoom to get base offset
+    int base_offset_x = vars->map->center.offset_x / vars->map->scale.zoom_factor;
+    int base_offset_y = vars->map->center.offset_y / vars->map->scale.zoom_factor;
+    
+    // Update zoom factor
+    vars->map->scale.zoom_factor *= zoom_delta;
+    
+    // Limit zoom range
+    if (vars->map->scale.zoom_factor < 0.1)
+        vars->map->scale.zoom_factor = 0.1;
+    if (vars->map->scale.zoom_factor > 10.0)
+        vars->map->scale.zoom_factor = 10.0;
+    
+    // Calculate new offsets based on new zoom
+    vars->map->center.offset_x = base_offset_x * vars->map->scale.zoom_factor;
+    vars->map->center.offset_y = base_offset_y * vars->map->scale.zoom_factor;
+    
+    calculate_scale(vars->map);
+    parse_map(vars->points, vars->window_name, vars->map);
+    apply_projection(vars->points, vars->map);
+    move_map(vars->points, vars->map, 0, 0);
+}
+
+void    iso_points(t_vars *vars)
+{
+    if (vars->map->scale.zoom_factor == 0)
+        vars->map->scale.zoom_factor = 1.1;
+    vars->map->center.offset_x = 0;
+    vars->map->center.offset_y = 0;
+    apply_projection(vars->points, vars->map);
+    move_map(vars->points, vars->map, 0, 0);
 }

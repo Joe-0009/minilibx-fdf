@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:23 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 14:15:26 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:42:16 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	put_pixel(t_vars *vars, int x, int y, int color)
 
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		dst = vars->img.addr + (y * vars->img.line_length + x
-				* (vars->img.bits_per_pixel / 8));
+		dst = vars->img->addr + (y * vars->img->line_length + x
+				* (vars->img->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}
 }

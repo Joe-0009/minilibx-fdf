@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/06 15:31:05 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:40:01 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,28 @@ static int	open_map_file(char *file_name)
 	return (fd);
 }
 
-t_map	map_dimension(char *file_name)
+t_map   map_dimension(char *file_name)
 {
-	t_map	map;
-	int		fd;
-	char	*line;
-	int		height;
+    t_map   map;
+    int     fd;
+    char    *line;
+    int     height;
 
-	height = 0;
-	fd = open_map_file(file_name);
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (height == 0)
-			map.dim.width = ft_words_count(line, ' ');
-		height++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	map.dim.height = height;
-	return (map);
+    height = 0;
+    fd = open_map_file(file_name);
+    line = get_next_line(fd);
+    while (line)
+    {
+        if (height == 0)
+            map.dim.width = ft_words_count(line, ' ');
+        height++;
+        free(line);
+        line = get_next_line(fd);
+    }
+    close(fd);
+    map.dim.height = height;
+    map.scale.zoom_factor = 1.1;
+    map.scale.projection = ISO;
+    map.scale.iso_angle = 0.523599;
+    return (map);
 }
