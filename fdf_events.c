@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 13:13:40 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/09 13:41:14 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,4 @@ void mlx_hooks(t_vars *vars, char *str)
     vars->window_name = str;
     mlx_hook(vars->win, 2, 1L << 0, key_handler, vars);
     mlx_hook(vars->win, 17, 0, close_window_x, vars);
-    create_image(vars);
 }
