@@ -5,86 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 14:15:14 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:42:01 by yrachidi         ###   ########.fr       */
+/*   Created: 2025/01/10 15:24:25 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/01/10 15:26:32 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_line_low_slope(t_vars *vars, int dx, int dy, t_point *a,
-		t_point *b)
+static int	plot_low_slope_points(t_line_params *line, int p)
+{
+	if (p < 0)
+		p = p + 2 * abs(line->dy);
+	else
+	{
+		if (line->dy > 0)
+			line->start->y += 1;
+		else
+			line->start->y -= 1;
+		p = p + 2 * abs(line->dy) - 2 * abs(line->dx);
+	}
+	return (p);
+}
+
+void	draw_line_low_slope(t_vars *vars, t_line_params *line)
 {
 	int		i;
 	int		p;
 	float	fraction;
 
 	i = -1;
-	p = 2 * abs(dy) - abs(dx);
-	put_pixel(vars, a->x, a->y, a->color);
-	while (++i < abs(dx))
+	p = 2 * abs(line->dy) - abs(line->dx);
+	put_pixel(vars, line->start->x, line->start->y, line->start->color);
+	while (++i < abs(line->dx))
 	{
-		fraction = (float)i / abs(dx);
-		if (dx > 0)
-			a->x += 1;
+		fraction = (float)i / abs(line->dx);
+		if (line->dx > 0)
+			line->start->x += 1;
 		else
-			a->x -= 1;
-		if (p < 0)
-			p = p + 2 * abs(dy);
-		else
-		{
-			if (dy > 0)
-				a->y += 1;
-			else
-				a->y -= 1;
-			p = p + 2 * abs(dy) - 2 * abs(dx);
-		}
-		put_pixel(vars, a->x, a->y, interpolate_color(a->color, b->color,
-				fraction));
+			line->start->x -= 1;
+		p = plot_low_slope_points(line, p);
+		put_pixel(vars, line->start->x, line->start->y,
+			interpolate_color(line->start->color, line->end->color, fraction));
 	}
 }
 
-void	draw_line_high_slope(t_vars *vars, int dx, int dy, t_point *a,
-		t_point *b)
+static int	plot_high_slope_points(t_line_params *line, int p)
 {
-	int		p;
+	if (p < 0)
+		p = p + 2 * abs(line->dx);
+	else
+	{
+		if (line->dx > 0)
+			line->start->x += 1;
+		else
+			line->start->x -= 1;
+		p = p + 2 * abs(line->dx) - 2 * abs(line->dy);
+	}
+	return (p);
+}
+
+void	draw_line_high_slope(t_vars *vars, t_line_params *line)
+{
 	int		i;
+	int		p;
 	float	fraction;
 
 	i = -1;
-	p = 2 * abs(dx) - abs(dy);
-	put_pixel(vars, a->x, a->y, a->color);
-	while (++i < abs(dy))
+	p = 2 * abs(line->dx) - abs(line->dy);
+	put_pixel(vars, line->start->x, line->start->y, line->start->color);
+	while (++i < abs(line->dy))
 	{
-		fraction = (float)i / abs(dy);
-		if (dy > 0)
-			a->y += 1;
+		fraction = (float)i / abs(line->dy);
+		if (line->dy > 0)
+			line->start->y += 1;
 		else
-			a->y -= 1;
-		if (p < 0)
-			p = p + 2 * abs(dx);
-		else
-		{
-			if (dx > 0)
-				a->x += 1;
-			else
-				a->x -= 1;
-			p = p + 2 * abs(dx) - 2 * abs(dy);
-		}
-		put_pixel(vars, a->x, a->y, interpolate_color(a->color, b->color,
-				fraction));
+			line->start->y -= 1;
+		p = plot_high_slope_points(line, p);
+		put_pixel(vars, line->start->x, line->start->y,
+			interpolate_color(line->start->color, line->end->color, fraction));
 	}
 }
 
 void	draw_line(t_vars *vars, t_point a, t_point b)
 {
-	int dx;
-	int dy;
+	t_line_params	line;
 
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	if (abs(dx) > abs(dy))
-		draw_line_low_slope(vars, dx, dy, &a, &b);
+	line.dx = b.x - a.x;
+	line.dy = b.y - a.y;
+	line.start = &a;
+	line.end = &b;
+	if (abs(line.dx) > abs(line.dy))
+		draw_line_low_slope(vars, &line);
 	else
-		draw_line_high_slope(vars, dx, dy, &a, &b);
+		draw_line_high_slope(vars, &line);
 }

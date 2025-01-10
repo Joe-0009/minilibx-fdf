@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:55:17 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:55:18 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:00:33 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	close_window_x(t_vars *vars)
 	exit(0);
 	return (0);
 }
+
 int	close_window_esc(int keycode, t_vars *vars)
 {
 	if (keycode == KEY_ESC)

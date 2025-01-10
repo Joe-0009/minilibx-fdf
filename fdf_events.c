@@ -6,13 +6,13 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:55:33 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:08:20 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	reset_shape(int keycode, t_vars *vars, int *total_offset_x,
+void	reset_shape(int keycode, t_vars *vars, int *total_offset_x,
 		int *total_offset_y)
 {
 	if (keycode == KEY_SPACE)
@@ -25,7 +25,6 @@ int	reset_shape(int keycode, t_vars *vars, int *total_offset_x,
 		parse_map(vars->points, vars->window_name, vars->map);
 		iso_points(vars);
 	}
-	return (0);
 }
 
 void	change_projection(t_vars *vars)
