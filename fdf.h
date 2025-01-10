@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:29:46 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:54:25 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@
 # define KEY_SPACE 32
 
 # define KEY_ESC 65307
-
-
 
 typedef struct s_dimensions
 {
@@ -98,9 +96,9 @@ typedef struct s_map_context
 
 typedef struct s_point
 {
-	int				x;
-	int				y;
-	int				z;
+	float			x;
+	float			y;
+	float			z;
 	int				color;
 }					t_point;
 
@@ -164,7 +162,8 @@ void				free_points(int map_height, t_point **points);
 t_point				**points_init(t_map *map);
 
 // Transformation
-void	find_map_boundaries(t_point **points, t_map *map, t_bounds *bounds);
+void				find_map_boundaries(t_point **points, t_map *map,
+						t_bounds *bounds);
 void				move_map(t_point **points, t_map *map, int new_offset_x,
 						int new_offset_y);
 void				iso_point(t_point *a, float angle);
@@ -193,15 +192,18 @@ void				main_draw(t_vars *vars);
 // Event handling
 int					close_window_esc(int keycode, t_vars *vars);
 int					close_window_x(t_vars *vars);
+int					reset_shape(int keycode, t_vars *vars, int *total_offset_x,
+						int *total_offset_y);
+void				change_projection(t_vars *vars);
+int					handle_movement(int keycode, t_vars *vars);
+int					zoom_in_and_out(int keycode, t_vars *vars);
+int					rotate(int keycode, t_vars *vars);
 void				mlx_hooks(t_vars *vars, char *str);
 
 // rotation
-void				rotate_x(t_point *a, float angle);
-void				rotate_y(t_point *a, float angle);
-void				rotate_z(t_point *a, float angle);
-void				iso_point(t_point *a, float angle);
-void rotate_point_around_center(t_point *point, float angle, char axis, t_bounds *bounds);
-void apply_rotation(t_vars *vars, float angle, char axis);
+void				rotate_point(t_point *point, float angle, char axis,
+						t_bounds *bounds);
+void				apply_rotation(t_vars *vars, float angle, char axis);
 void				draw_new_image(t_vars *vars);
 
 #endif

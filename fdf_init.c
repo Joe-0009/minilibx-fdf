@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 15:39:10 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:55:57 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	cleanup_mlx(t_vars *vars)
 		vars->mlx = NULL;
 	}
 }
+
 void	cleanup_image(t_vars *vars)
 {
 	if (vars->img)

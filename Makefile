@@ -6,6 +6,7 @@ MLX = libmlx.a
 
 SRCS = main.c \
        fdf_events.c \
+       fdf_events2.c \
        fdf_file_utils.c \
        fdf_height.c \
        fdf_init.c \

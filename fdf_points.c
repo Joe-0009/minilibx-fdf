@@ -6,12 +6,11 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:34:09 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 15:32:20 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:41:31 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 int	calculate_color(int height, t_height_range *range)
 {

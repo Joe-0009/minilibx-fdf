@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:14 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 12:41:40 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:42:01 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	draw_line_high_slope(t_vars *vars, int dx, int dy, t_point *a,
 
 void	draw_line(t_vars *vars, t_point a, t_point b)
 {
-	int	dx;
-	int	dy;
+	int dx;
+	int dy;
 
 	dx = b.x - a.x;
 	dy = b.y - a.y;
