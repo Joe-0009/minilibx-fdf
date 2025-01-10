@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 20:26:48 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:29:46 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 
 # define WIDTH 1600
-# define HEIGHT 1000
+# define HEIGHT 1600
 
 // keyscode
 # define KEY_W 119
@@ -34,7 +34,15 @@
 # define KEY_I 105
 # define KEY_Z 122
 # define KEY_O 111
+# define KEY_P 112
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_RIGHT 65363
+# define KEY_LEFT 65361
+# define KEY_SPACE 32
+
 # define KEY_ESC 65307
+
 
 
 typedef struct s_dimensions

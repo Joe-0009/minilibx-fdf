@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/09 21:13:03 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:31:04 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int close_window_x(t_vars *vars)
 
 int close_window_esc(int keycode, t_vars *vars)
 {
-    if (keycode == 65307) // Escape key
+    if (keycode == KEY_ESC)
     {
         cleanup_image(vars);
         cleanup_window(vars);
@@ -46,15 +46,15 @@ int handle_movement(int keycode, t_vars *vars)
     static int total_offset_x = 0;
     static int total_offset_y = 0;
 
-    if (keycode == 65362) // Up arrow
+    if (keycode == KEY_UP) 
         total_offset_y -= 20;
-    else if (keycode == 65364) // Down arrow
+    else if (keycode == KEY_DOWN) 
         total_offset_y += 20;
-    else if (keycode == 65361) // Left arrow
+    else if (keycode == KEY_LEFT) 
         total_offset_x -= 20;
-    else if (keycode == 65363) // Right arrow
+    else if (keycode == KEY_RIGHT) 
         total_offset_x += 20;
-    else if (keycode == 32) // Space bar
+    else if (keycode == KEY_SPACE) 
     {
         total_offset_x = 0;
         total_offset_y = 0;
@@ -64,7 +64,7 @@ int handle_movement(int keycode, t_vars *vars)
         parse_map(vars->points, vars->window_name, vars->map);
         iso_points(vars);
     }
-    else if (keycode == 112) // 'P' key for projection change
+    else if (keycode == KEY_P) 
     {
         vars->map->scale.projection = (vars->map->scale.projection + 1) % 4;
         calculate_scale(vars->map);
@@ -99,18 +99,18 @@ int rotate(int keycode, t_vars *vars)
 {
     float angle;
 
-    angle = 0.1;  // About 5.7 degrees
-    if (keycode == KEY_W)  // Rotate up (around X-axis)
+    angle = 0.1;
+    if (keycode == KEY_W)  
         apply_rotation(vars, -angle, 'x');
-    else if (keycode == KEY_S)  // Rotate down (around X-axis)
+    else if (keycode == KEY_S)
         apply_rotation(vars, angle, 'x');
-    else if (keycode == KEY_A)  // Rotate left (around Y-axis)
+    else if (keycode == KEY_A)  
         apply_rotation(vars, -angle, 'y');
-    else if (keycode == KEY_D)  // Rotate right (around Y-axis)
+    else if (keycode == KEY_D)  
         apply_rotation(vars, angle, 'y');
-    else if (keycode == KEY_Q)  // Rotate counter-clockwise (around Z-axis)
+    else if (keycode == KEY_Q)  
         apply_rotation(vars, -angle, 'z');
-    else if (keycode == KEY_E)  // Rotate clockwise (around Z-axis)
+    else if (keycode == KEY_E) 
         apply_rotation(vars, angle, 'z');
     if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A || 
         keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E)
