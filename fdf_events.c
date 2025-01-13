@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 15:08:20 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:34:26 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	reset_shape(int keycode, t_vars *vars, int *total_offset_x,
 {
 	if (keycode == KEY_SPACE)
 	{
-		total_offset_x = 0;
-		total_offset_y = 0;
+		*total_offset_x = 0;
+		*total_offset_y = 0;
 		vars->map->scale.zoom_factor = 1.1;
 		vars->map->scale.projection = ISO;
 		calculate_scale(vars->map);
-		parse_map(vars->points, vars->window_name, vars->map);
+		parse_map(vars);
 		iso_points(vars);
 	}
 }
@@ -31,7 +31,7 @@ void	change_projection(t_vars *vars)
 {
 	vars->map->scale.projection = (vars->map->scale.projection + 1) % 4;
 	calculate_scale(vars->map);
-	parse_map(vars->points, vars->window_name, vars->map);
+	parse_map(vars);
 	apply_projection(vars->points, vars->map);
 }
 
@@ -52,8 +52,8 @@ int	handle_movement(int keycode, t_vars *vars)
 		reset_shape(keycode, vars, &total_offset_x, &total_offset_y);
 	else if (keycode == KEY_P)
 		change_projection(vars);
-	if ((keycode >= 65361 && keycode <= 65364) || keycode == 32
-		|| keycode == 112)
+	if ((keycode >= KEY_LEFT && keycode <= KEY_DOWN) || keycode == KEY_SPACE
+		|| keycode == KEY_P)
 	{
 		vars->map->center.offset_x = total_offset_x;
 		vars->map->center.offset_y = total_offset_y;

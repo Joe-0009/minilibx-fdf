@@ -6,24 +6,11 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:18 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:42:38 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:23:00 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*p;
-
-	p = (unsigned char *)b;
-	while (len > 0)
-	{
-		p[len - 1] = c;
-		len--;
-	}
-	return (b);
-}
 
 int	main(int ac, char **av)
 {
@@ -31,13 +18,11 @@ int	main(int ac, char **av)
 	t_map	map;
 
 	if (ac != 2)
-	{
-		return (0);
-	}
+		ft_error();
 	vars.window_name = av[1];
-	map = map_dimension(vars.window_name);
+	map = map_dimension(&vars);
 	vars.map = &map;
-	vars.points = points_init(&map);
+	points_init(&vars);
 	if (!vars.points)
 		return (0);
 	vars.mlx = mlx_init();

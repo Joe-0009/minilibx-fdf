@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:41 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:42:17 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:20:32 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	update_zoom(t_vars *vars, float zoom_delta)
 	vars->map->center.offset_x = base_offset_x * vars->map->scale.zoom_factor;
 	vars->map->center.offset_y = base_offset_y * vars->map->scale.zoom_factor;
 	calculate_scale(vars->map);
-	parse_map(vars->points, vars->window_name, vars->map);
+	parse_map(vars);
 	apply_projection(vars->points, vars->map);
 	move_map(vars->points, vars->map, 0, 0);
 }

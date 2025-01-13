@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 15:24:56 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:32:02 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ typedef struct s_point
 
 typedef struct s_line_params
 {
-    int		dx;
-    int		dy;
-    t_point	*start;
-    t_point	*end;
-}			t_line_params;
+	int				dx;
+	int				dy;
+	t_point			*start;
+	t_point			*end;
+}					t_line_params;
 
 typedef struct s_bounds
 {
@@ -151,8 +151,9 @@ typedef struct s_vars
 ** Function prototypes
 */
 // Point operations
-t_point				**points_init(t_map *map);
-void				parse_map(t_point **points, char *file_name, t_map *map);
+void				ft_error(void);
+void				points_init(t_vars *vars);
+void				parse_map(t_vars *vars);
 void				free_points(int map_height, t_point **points);
 
 // Core initialization and cleanup
@@ -160,14 +161,15 @@ void				init_fdf(t_vars *vars);
 void				cleanup_image(t_vars *vars);
 void				cleanup_window(t_vars *vars);
 void				create_image(t_vars *vars);
+void				cleanup_all(t_vars *vars);
 
 // Map operations and scaling
 void				find_map_boundaries(t_point **points, t_map *map,
 						t_bounds *bounds);
 int					open_map_file(char *file_name);
 void				calculate_scale(t_map *map);
-void				find_height_range(char *file_name, t_map *map);
-t_map				map_dimension(char *file_name);
+void				find_height_range(t_vars *vars);
+t_map				map_dimension(t_vars *vars);
 
 // Transformations and movement
 void				move_map(t_point **points, t_map *map, int new_offset_x,
@@ -199,7 +201,8 @@ int					rotate(int keycode, t_vars *vars);
 // Utility functions
 int					ft_words_count(char const *s, char c);
 char				**ft_split(char const *s, char c);
-int					ft_atoi(const char *str);
+int					ft_atoi(const char *str, t_vars *vars);
 void				ft_free_strs(char **strs);
+int					ft_atoi_base(char *str, int base);
 
 #endif

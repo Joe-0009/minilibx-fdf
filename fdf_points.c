@@ -6,44 +6,47 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:34:09 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:41:31 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:33:39 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	calculate_color(int height, t_height_range *range)
+int	calculate_color(int height, t_height_range *range, int color)
 {
 	float	height_percent;
 
 	if (height == 0)
-		return (0x0000FF);
+		return (color);
 	height_percent = (float)(height - range->min) / (range->max - range->min
 			+ 0.1);
 	return (0xFFFFFF - (int)(height_percent * 0x00FFFF));
 }
 
-static void	create_point(t_point *point, char **color_split,
+static void	create_point(t_point *point, t_vars *vars, char **color_split,
 		t_map_context *context)
 {
 	int	height;
 
-	height = ft_atoi(color_split[0]);
+	height = ft_atoi(color_split[0], vars);
 	point->x = context->j * context->map->scale.base;
 	point->y = context->i * context->map->scale.base;
 	point->z = height * context->map->scale.z_scale;
 	if (color_split[1])
-		point->color = (int)strtol(color_split[1], NULL, 16);
+		point->color = ft_atoi_base(color_split[1] + 2, 16);
 	else
-		point->color = calculate_color(height, &context->map->height);
+		point->color = calculate_color(height, &context->map->height, 0x0000FF);
 }
 
-static void	parse_line(char *line, t_point **points, t_map_context *context)
+static void	parse_line(char *line, t_point **points, t_vars *vars,
+		t_map_context *context)
 {
 	char	**split;
 	char	**color_split;
 	int		j;
 
+	if (!points)
+		ft_error();
 	j = -1;
 	split = ft_split(line, ' ');
 	if (!split)
@@ -58,27 +61,27 @@ static void	parse_line(char *line, t_point **points, t_map_context *context)
 			return ;
 		}
 		context->j = j;
-		create_point(&points[context->i][j], color_split, context);
+		create_point(&points[context->i][j], vars, color_split, context);
 		ft_free_strs(color_split);
 	}
 	ft_free_strs(split);
 }
 
-void	parse_map(t_point **points, char *file_name, t_map *map)
+void	parse_map(t_vars *vars)
 {
 	int				fd;
 	char			*line;
 	t_map_context	context;
 
-	find_height_range(file_name, map);
-	calculate_scale(map);
-	context.map = map;
+	find_height_range(vars);
+	calculate_scale(vars->map);
+	context.map = vars->map;
 	context.i = 0;
-	fd = open(file_name, O_RDONLY);
+	fd = open(vars->window_name, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
-		parse_line(line, points, &context);
+		parse_line(line, vars->points, vars, &context);
 		context.i++;
 		free(line);
 		line = get_next_line(fd);
@@ -86,26 +89,26 @@ void	parse_map(t_point **points, char *file_name, t_map *map)
 	close(fd);
 }
 
-t_point	**points_init(t_map *map)
+void	points_init(t_vars *vars)
 {
 	t_point	**points;
 	int		i;
 
-	points = malloc(map->dim.height * sizeof(t_point *));
+	points = malloc(vars->map->dim.height * sizeof(t_point *));
 	if (!points)
-		return (NULL);
+		return ;
 	i = 0;
-	while (i < map->dim.height)
+	while (i < vars->map->dim.height)
 	{
-		points[i] = malloc(map->dim.width * sizeof(t_point));
+		points[i] = malloc(vars->map->dim.width * sizeof(t_point));
 		if (!points[i])
 		{
 			while (--i >= 0)
 				free(points[i]);
 			free(points);
-			return (NULL);
+			return ;
 		}
 		i++;
 	}
-	return (points);
+	vars->points = points;
 }

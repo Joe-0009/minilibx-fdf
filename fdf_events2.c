@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:55:17 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 15:00:33 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:33:13 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	key_handler(int keycode, t_vars *vars)
 {
 	if (keycode == KEY_ESC)
 		close_window_esc(keycode, vars);
-	else if ((keycode >= 65361 && keycode <= 65364) || keycode == 32
-		|| keycode == 112)
+	else if ((keycode >= KEY_LEFT && keycode <= KEY_DOWN)
+		|| keycode == KEY_SPACE || keycode == KEY_P)
 		handle_movement(keycode, vars);
-	else if (keycode == 122 || keycode == 111)
+	else if (keycode == KEY_Z || keycode == KEY_O)
 		zoom_in_and_out(keycode, vars);
 	else if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A
 		|| keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E

@@ -6,24 +6,26 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:59 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/10 14:41:56 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:19:29 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	process_height(char *str, t_height_range *height)
+static void	process_height(char *str, t_vars *vars)
 {
 	int	current_height;
 
-	current_height = ft_atoi(str);
-	if (current_height < height->min)
-		height->min = current_height;
-	if (current_height > height->max)
-		height->max = current_height;
+	if (!str)
+		ft_error();
+	current_height = ft_atoi(str, vars);
+	if (current_height < vars->map->height.min)
+		vars->map->height.min = current_height;
+	if (current_height > vars->map->height.max)
+		vars->map->height.max = current_height;
 }
 
-void	find_height_range(char *file_name, t_map *map)
+void	find_height_range(t_vars *vars)
 {
 	int		fd;
 	char	*line;
@@ -31,9 +33,9 @@ void	find_height_range(char *file_name, t_map *map)
 	char	**color_split;
 	int		i;
 
-	map->height.min = INT_MAX;
-	map->height.max = INT_MIN;
-	fd = open_map_file(file_name);
+	vars->map->height.min = INT_MAX;
+	vars->map->height.max = INT_MIN;
+	fd = open_map_file(vars->window_name);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -42,7 +44,7 @@ void	find_height_range(char *file_name, t_map *map)
 		while (split[++i])
 		{
 			color_split = ft_split(split[i], ',');
-			process_height(color_split[0], &map->height);
+			process_height(color_split[0], vars);
 			ft_free_strs(color_split);
 		}
 		ft_free_strs(split);
@@ -91,5 +93,4 @@ void	calculate_scale(t_map *map)
 		map->scale.base = scale_y;
 	map->scale.base *= 1.1;
 	map->scale.z_scale = map->scale.base * height_factor;
-	map->scale.iso_angle = 0.523599;
 }
