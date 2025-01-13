@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 12:34:48 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:14:56 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	create_image(t_vars *vars)
 		exit(EXIT_FAILURE);
 	}
 }
+
 
 void	init_fdf(t_vars *vars)
 {

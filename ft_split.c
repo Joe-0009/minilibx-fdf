@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:30 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 11:22:49 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:58:38 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_words_count(char const *s, char c)
 
 	count = 0;
 	word = 0;
-	while (*s)
+	while (*s && *s != '\n')
 	{
 		if (*s != c && !word)
 		{
@@ -96,3 +96,5 @@ char	**ft_split(char const *s, char c)
 	strs[j] = NULL;
 	return (strs);
 }
+
+

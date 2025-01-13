@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 12:32:02 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/13 13:57:21 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,9 @@ typedef struct s_vars
 	t_dimensions	dim;
 	t_map			*map;
 }					t_vars;
+
+
+void print_points(t_vars *vars);
 
 /*
 ** Function prototypes
