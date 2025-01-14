@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:30 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 14:58:38 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:53:55 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_str_s_dup(char const *s, char c, int *start)
 	int		i;
 
 	end = 0;
-	while (s[*start + end] && s[*start + end] != c)
+	while (s[*start + end] && s[*start + end] != c && s[*start + end] != '\n')
 		end++;
 	dup = (char *)calloc(end + 1, 1);
 	if (!dup)
@@ -85,7 +85,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (s[i])
+	while (s[i] && s[i] != '\n')
 	{
 		if (s[i] == c && s[i++])
 			continue ;
@@ -96,5 +96,3 @@ char	**ft_split(char const *s, char c)
 	strs[j] = NULL;
 	return (strs);
 }
-
-

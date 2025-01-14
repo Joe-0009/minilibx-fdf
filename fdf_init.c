@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 15:14:56 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:34:02 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	create_image(t_vars *vars)
 void	init_fdf(t_vars *vars)
 {
 	parse_map(vars);
-	apply_projection(vars->points, vars->map);
-	move_map(vars->points, vars->map, 0, 0);
+	iso_point(vars);
+	move_map(vars->points, vars->map);
 	mlx_hooks(vars, vars->window_name);
 	create_image(vars);
 	main_draw(vars);

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 15:14:38 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:33:40 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	reset_shape(int keycode, t_vars *vars, int *total_offset_x,
 		*total_offset_x = 0;
 		*total_offset_y = 0;
 		vars->map->scale.zoom_factor = 1.1;
-		vars->map->scale.projection = ISO;
 		calculate_scale(vars->map);
 		parse_map(vars);
-		iso_points(vars);
+		iso_point(vars);
 	}
 }
 
@@ -32,7 +31,7 @@ void	change_projection(t_vars *vars)
 	vars->map->scale.projection = (vars->map->scale.projection + 1) % 4;
 	calculate_scale(vars->map);
 	parse_map(vars);
-	apply_projection(vars->points, vars->map);
+	apply_projection(vars);
 }
 
 int	handle_movement(int keycode, t_vars *vars)
@@ -57,7 +56,7 @@ int	handle_movement(int keycode, t_vars *vars)
 	{
 		vars->map->center.offset_x = total_offset_x;
 		vars->map->center.offset_y = total_offset_y;
-		move_map(vars->points, vars->map, total_offset_x, total_offset_y);
+		move_map(vars->points, vars->map);
 		draw_new_image(vars);
 	}
 	return (0);

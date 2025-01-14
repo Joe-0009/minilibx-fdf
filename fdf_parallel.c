@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:43:30 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 11:19:57 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:12:40 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	parallel_point_side(t_point *a)
 	a->y = a->y;
 }
 
-void	project_point(t_point *a, t_map *map)
+void	project_point(t_point *a, t_map *map, t_vars *vars)
 {
 	if (map->scale.projection == ISO)
-		iso_point(a, 0.523599);
+		iso_point(vars);
 	else if (map->scale.projection == PARALLEL_TOP)
 		parallel_point_top(a);
 	else if (map->scale.projection == PARALLEL_FRONT)
@@ -42,20 +42,20 @@ void	project_point(t_point *a, t_map *map)
 		parallel_point_side(a);
 }
 
-void	apply_projection(t_point **points, t_map *map)
+void	apply_projection(t_vars *vars)
 {
 	int	i;
 	int	j;
 
-	if (!points || !map)
+	if (!vars->points || !vars->map)
 		return ;
 	i = 0;
-	while (i < map->dim.height)
+	while (i < vars->map->dim.height)
 	{
 		j = 0;
-		while (j < map->dim.width)
+		while (j < vars->map->dim.width)
 		{
-			project_point(&points[i][j], map);
+			project_point(&vars->points[i][j], vars->map, vars);
 			j++;
 		}
 		i++;

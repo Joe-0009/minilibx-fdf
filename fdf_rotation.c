@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotation.c                                         :+:      :+:    :+:   */
+/*   fdf_rotation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:56:14 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 11:23:47 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:40:00 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ void	apply_rotation(t_vars *vars, float angle, char axis)
 		}
 		i++;
 	}
-	move_map(vars->points, vars->map, 0, 0);
+	move_map(vars->points, vars->map);
 }

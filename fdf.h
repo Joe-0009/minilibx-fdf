@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 13:57:21 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 22:33:25 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,15 +148,14 @@ typedef struct s_vars
 }					t_vars;
 
 
-void print_points(t_vars *vars);
 
 /*
 ** Function prototypes
 */
 // Point operations
-void				ft_error(void);
-void				points_init(t_vars *vars);
-void				parse_map(t_vars *vars);
+void	ft_error(void);
+void points_init(t_vars *vars);
+ void    parse_map(t_vars *vars);
 void				free_points(int map_height, t_point **points);
 
 // Core initialization and cleanup
@@ -164,28 +163,26 @@ void				init_fdf(t_vars *vars);
 void				cleanup_image(t_vars *vars);
 void				cleanup_window(t_vars *vars);
 void				create_image(t_vars *vars);
-void				cleanup_all(t_vars *vars);
+void    cleanup_all(t_vars *vars);
 
 // Map operations and scaling
 void				find_map_boundaries(t_point **points, t_map *map,
 						t_bounds *bounds);
 int					open_map_file(char *file_name);
 void				calculate_scale(t_map *map);
-void				find_height_range(t_vars *vars);
+void	find_height_range(t_vars *vars);
 t_map				map_dimension(t_vars *vars);
 
 // Transformations and movement
-void				move_map(t_point **points, t_map *map, int new_offset_x,
-						int new_offset_y);
+void				move_map(t_point **points, t_map *map);
 void				update_zoom(t_vars *vars, float zoom_factor);
-void				iso_point(t_point *a, float angle);
-void				iso_points(t_vars *vars);
+void				iso_point(t_vars *vars);
 
 // Rotation
 void				apply_rotation(t_vars *vars, float angle, char axis);
 
 // Parallel
-void				apply_projection(t_point **points, t_map *map);
+void				apply_projection(t_vars *vars);
 
 // Drawing operations
 int					interpolate_color(int color1, int color2, float fraction);
@@ -206,6 +203,6 @@ int					ft_words_count(char const *s, char c);
 char				**ft_split(char const *s, char c);
 int					ft_atoi(const char *str, t_vars *vars);
 void				ft_free_strs(char **strs);
-int					ft_atoi_base(char *str, int base);
+int	ft_atoi_base(char *str, int base);
 
 #endif
