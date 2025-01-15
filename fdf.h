@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/14 22:33:25 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 23:25:19 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ typedef struct s_vars
 	t_point			**points;
 	t_dimensions	dim;
 	t_map			*map;
+	float current_rotation_angle;
+	char current_rotation_axis;
 }					t_vars;
 
 

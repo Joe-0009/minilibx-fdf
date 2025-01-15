@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:41 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/14 23:09:55 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/14 23:48:01 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,33 @@ void	move_map(t_point **points, t_map *map)
 
 void	update_zoom(t_vars *vars, float zoom_delta)
 {
-	vars->map->scale.zoom_factor *= zoom_delta;
-	if (vars->map->scale.zoom_factor < 0.1)
-		vars->map->scale.zoom_factor = 0.1;
-	if (vars->map->scale.zoom_factor > 10.0)
-		vars->map->scale.zoom_factor = 10.0;
-	calculate_scale(vars->map);
-	parse_map(vars);
-	iso_point(vars);
-	move_map(vars->points, vars->map);
+    t_bounds	bounds;
+    int			i;
+    int			j;
+    float		new_zoom_factor;
+    
+    find_map_boundaries(vars->points, vars->map, &bounds);
+    new_zoom_factor = vars->map->scale.zoom_factor * zoom_delta;
+    if (new_zoom_factor < 0.1)
+        new_zoom_factor = 0.1;
+    if (new_zoom_factor > 10.0)
+        new_zoom_factor = 10.0;
+    float scale_factor = new_zoom_factor / vars->map->scale.zoom_factor;
+    vars->map->scale.zoom_factor = new_zoom_factor;
+    i = -1;
+    while (++i < vars->map->dim.height)
+    {
+        j = -1;
+        while (++j < vars->map->dim.width)
+        {
+            vars->points[i][j].x *= scale_factor;
+            vars->points[i][j].y *= scale_factor;
+            vars->points[i][j].z *= scale_factor;
+        }
+    }
+    move_map(vars->points, vars->map);
 }
+
 
 void	iso_point(t_vars *vars)
 {
