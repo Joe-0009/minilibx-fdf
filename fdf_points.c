@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:34:09 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 15:49:45 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:54:31 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	parse_map(t_vars *vars)
 		free(line);
 		line = get_next_line(fd);
 	}
+	cleanup_gnl(fd);
 	close(fd);
 }
 

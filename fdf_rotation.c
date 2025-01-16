@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:56:14 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 13:57:50 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:27:21 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	rotate_x_axis(float *y, float *z, float angle)
 	*z = temp * sin(angle) + *z * cos(angle);
 }
 
-
 static void	rotate_y_axis(float *x, float *z, float angle)
 {
 	float	temp;
@@ -30,7 +29,6 @@ static void	rotate_y_axis(float *x, float *z, float angle)
 	*x = temp * cos(angle) + *z * sin(angle);
 	*z = -temp * sin(angle) + *z * cos(angle);
 }
-
 
 static void	rotate_z_axis(float *x, float *y, float angle)
 {
@@ -68,7 +66,6 @@ static void	rotate_point(t_point *point, float angle, char axis,
 	point->z = z;
 }
 
-
 void	apply_rotation(t_vars *vars, float angle, char axis)
 {
 	t_bounds	bounds;
@@ -91,4 +88,3 @@ void	apply_rotation(t_vars *vars, float angle, char axis)
 	}
 	move_map(vars->points, vars->map);
 }
-

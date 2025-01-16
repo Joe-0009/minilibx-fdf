@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 18:46:42 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:07:44 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,34 +142,51 @@ typedef struct s_vars
 	t_image			*img;
 	t_point			**points;
 	t_map			*map;
-	float current_rotation_angle;
-	char current_rotation_axis;
+	float			current_rotation_angle;
+	char			current_rotation_axis;
 }					t_vars;
-
-
 
 /*
 ** Function prototypes
 */
 // Point operations
-void	ft_error(void);
-void points_init(t_vars *vars);
- void    parse_map(t_vars *vars);
+
+// get_next_line
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+/* get_next_line_utils.c */
+size_t				ft_strlen(const char *str);
+char				*ft_strjoin(char *s1, char *s2);
+char				*ft_strchr(char *str, int c);
+void				*ft_calloc(size_t count, size_t size);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
+/* main function */
+void				ft_free(char **buffer);
+char				*get_after(char *buffer);
+char				*get_before(char *buffer);
+char				*get_full_line(int fd, char *rbuf);
+char				*get_next_line(int fd);
+
+void				ft_error(void);
+void				points_init(t_vars *vars);
+void				parse_map(t_vars *vars);
 void				free_points(int map_height, t_point **points);
 
 // Core initialization and cleanup
 void				init_fdf(t_vars *vars);
 void				cleanup_image(t_vars *vars);
-void				cleanup_window(t_vars *vars);
 void				create_image(t_vars *vars);
-void    cleanup_all(t_vars *vars);
+void				cleanup_all(t_vars *vars);
 
 // Map operations and scaling
 void				find_map_boundaries(t_point **points, t_map *map,
 						t_bounds *bounds);
 int					open_map_file(char *file_name);
 void				calculate_scale(t_map *map);
-void	find_height_range(t_vars *vars);
+void				find_height_range(t_vars *vars);
 t_map				map_dimension(t_vars *vars);
 
 // Transformations and movement
@@ -202,6 +219,7 @@ int					ft_words_count(char const *s, char c);
 char				**ft_split(char const *s, char c);
 int					ft_atoi(const char *str, t_vars *vars);
 void				ft_free_strs(char **strs);
-int	ft_atoi_base(char *str, int base);
+int					ft_atoi_base(char *str, int base);
+void				cleanup_gnl(int fd);
 
 #endif

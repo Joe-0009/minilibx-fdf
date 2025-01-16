@@ -6,17 +6,17 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 11:30:03 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:26:48 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	open_map_file(char *file_name)
+int	open_map_file(char *filename)
 {
 	int	fd;
 
-	fd = open(file_name, O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		ft_error();
 	return (fd);
@@ -36,7 +36,6 @@ static void	map_init(t_map *map)
 	map->center.offset_y = 0;
 	map->height.min = INT_MAX;
 	map->height.max = INT_MIN;
-	
 }
 
 t_map	map_dimension(t_vars *vars)

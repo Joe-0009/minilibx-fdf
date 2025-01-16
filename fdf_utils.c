@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:46 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 11:40:45 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:28:23 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_atoi(const char *str, t_vars *vars)
 	result = 0;
 	sign = 1;
 	if (!str || !*str)
-        return (cleanup_all(vars), ft_error(), 1);
+		return (cleanup_all(vars), ft_error(), 1);
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
@@ -45,9 +45,9 @@ int	ft_atoi(const char *str, t_vars *vars)
 		if (ft_isdigit(str[i]))
 			result = result * 10 + str[i++] - '0';
 		else
-			return (cleanup_all(vars), ft_error(), 1);
+			return (cleanup_all(vars), INT_MIN);
 		if (!(((result * sign) <= INT_MAX && (result * sign) >= INT_MIN)))
-			return (cleanup_all(vars), ft_error(), 1);
+			return (cleanup_all(vars), INT_MIN);
 	}
 	return (result * sign);
 }
@@ -62,7 +62,7 @@ void	free_points(int map_height, t_point **points)
 		while (i < map_height)
 		{
 			if (points[i])
-            	free(points[i]);
+				free(points[i]);
 			i++;
 		}
 		free(points);

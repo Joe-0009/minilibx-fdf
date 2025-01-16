@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 13:35:20 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:28:50 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,3 @@ void	iso_point(t_vars *vars)
 	apply_rotation(vars, 0.785398, 'z');
 	apply_rotation(vars, 0.95, 'x');
 }
-

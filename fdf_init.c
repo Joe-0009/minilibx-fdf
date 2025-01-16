@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 11:43:10 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:48:12 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	cleanup_image(t_vars *vars)
 {
 	if (!vars || !vars->img)
 		return ;
-
 	if (vars->img->img && vars->mlx)
 	{
 		mlx_destroy_image(vars->mlx, vars->img->img);
@@ -26,7 +25,6 @@ void	cleanup_image(t_vars *vars)
 	free(vars->img);
 	vars->img = NULL;
 }
-
 
 void	cleanup_all(t_vars *vars)
 {
@@ -49,11 +47,11 @@ void	cleanup_all(t_vars *vars)
 		vars->map = NULL;
 	}
 	if (vars->mlx)
-    {
-        mlx_destroy_display(vars->mlx);
-        free(vars->mlx);
-        vars->mlx = NULL;
-    }
+	{
+		mlx_destroy_display(vars->mlx);
+		free(vars->mlx);
+		vars->mlx = NULL;
+	}
 }
 
 void	create_image(t_vars *vars)
@@ -79,7 +77,6 @@ void	create_image(t_vars *vars)
 		exit(EXIT_FAILURE);
 	}
 }
-
 
 void	init_fdf(t_vars *vars)
 {

@@ -6,11 +6,14 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:41:16 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/08 11:25:47 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:47:51 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+
+
 
 void	ft_free(char **buffer)
 {
@@ -89,7 +92,7 @@ char	*get_full_line(int fd, char *rbuf)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char* buffer;
 	char		*line;
 	char		*remaining;
 
@@ -115,3 +118,5 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	return (line);
 }
+
+
