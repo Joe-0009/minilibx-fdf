@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 13:01:18 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:35:20 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,41 +76,9 @@ int	zoom_in_and_out(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	rotate(int keycode, t_vars *vars)
+void	iso_point(t_vars *vars)
 {
-	float	angle;
-	char	axis;
-
-	angle = 0.1;
-	if (keycode == KEY_W || keycode == KEY_S)
-	{
-		axis = 'x';
-		if (keycode == KEY_W)
-			vars->current_rotation_angle = -angle;
-		else
-			vars->current_rotation_angle = angle;
-	}
-	else if (keycode == KEY_A || keycode == KEY_D)
-	{
-		axis = 'y';
-		if (keycode == KEY_A)
-			vars->current_rotation_angle = -angle;
-		else
-			vars->current_rotation_angle = angle;
-	}
-	else if (keycode == KEY_Q || keycode == KEY_E)
-	{
-		axis = 'z';
-		if (keycode == KEY_Q)
-			vars->current_rotation_angle = -angle;
-		else
-			vars->current_rotation_angle = angle;
-	}
-	else
-		return (0);
-	vars->current_rotation_axis = axis;
-	apply_rotation(vars, vars->current_rotation_angle,
-		vars->current_rotation_axis);
-	draw_new_image(vars);
-	return (0);
+	apply_rotation(vars, 0.785398, 'z');
+	apply_rotation(vars, 0.95, 'x');
 }
+

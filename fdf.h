@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/14 23:25:19 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:46:42 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 */
 typedef enum e_projection
 {
-	ISO,
 	PARALLEL_TOP,
 	PARALLEL_FRONT,
 	PARALLEL_SIDE
@@ -92,7 +91,6 @@ typedef struct s_scale
 {
 	float			base;
 	float			z_scale;
-	float			iso_angle;
 	float			zoom_factor;
 	t_projection	projection;
 }					t_scale;
@@ -143,7 +141,6 @@ typedef struct s_vars
 	char			*window_name;
 	t_image			*img;
 	t_point			**points;
-	t_dimensions	dim;
 	t_map			*map;
 	float current_rotation_angle;
 	char current_rotation_axis;

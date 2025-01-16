@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/14 22:34:02 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:52:07 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	cleanup_image(t_vars *vars)
 {
+	printf("zeb\n");
 	if (!vars || !vars->img)
 		return ;
+
 	if (vars->img->img && vars->mlx)
 	{
 		mlx_destroy_image(vars->mlx, vars->img->img);

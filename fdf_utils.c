@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:46 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 15:07:22 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:48:20 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ int	ft_atoi(const char *str, t_vars *vars)
 		if (ft_isdigit(str[i]))
 			result = result * 10 + str[i++] - '0';
 		else
-			return (free_points(vars->dim.height, vars->points),
-				mlx_clear_window(vars->mlx, vars->img), ft_error(), 1);
+			return (cleanup_all(vars), ft_error(), 1);
 		if (!(((result * sign) <= INT_MAX && (result * sign) >= INT_MIN)))
-			return (free_points(vars->dim.height, vars->points),
-				mlx_clear_window(vars->mlx, vars->img), ft_error(), 1);
+			return (cleanup_all(vars), ft_error(), 1);
 	}
 	return (result * sign);
 }
