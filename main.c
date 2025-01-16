@@ -6,12 +6,19 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:18 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 15:14:14 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:37:58 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+void init_vars(t_vars *vars)
+{
+    vars->points = NULL;
+    vars->map = NULL;
+    vars->img = NULL;
+    vars->win = NULL;
+    vars->mlx = NULL;
+}
 int	main(int ac, char **av)
 {
 	t_vars	vars;
@@ -19,6 +26,8 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		ft_error();
+	
+	 init_vars(&vars);
 	vars.window_name = av[1];
 	map = map_dimension(&vars);
 	vars.map = &map;

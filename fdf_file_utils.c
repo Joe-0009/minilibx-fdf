@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 18:52:01 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:30:03 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	map_init(t_map *map)
 	map->center.offset_y = 0;
 	map->height.min = INT_MAX;
 	map->height.max = INT_MIN;
+	
 }
 
 t_map	map_dimension(t_vars *vars)

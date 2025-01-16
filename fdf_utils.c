@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:46 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 18:48:20 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:40:45 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_atoi(const char *str, t_vars *vars)
 	i = 0;
 	result = 0;
 	sign = 1;
+	if (!str || !*str)
+        return (cleanup_all(vars), ft_error(), 1);
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
@@ -57,10 +59,10 @@ void	free_points(int map_height, t_point **points)
 	i = 0;
 	if (points)
 	{
-		while (i < map_height && points[i])
+		while (i < map_height)
 		{
-			free(points[i]);
-			points[i] = NULL;
+			if (points[i])
+            	free(points[i]);
 			i++;
 		}
 		free(points);

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 18:52:07 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:43:10 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	cleanup_image(t_vars *vars)
 {
-	printf("zeb\n");
 	if (!vars || !vars->img)
 		return ;
 
@@ -28,32 +27,16 @@ void	cleanup_image(t_vars *vars)
 	vars->img = NULL;
 }
 
-void	cleanup_window(t_vars *vars)
-{
-	if (!vars)
-		return ;
-	if (vars->img)
-		cleanup_image(vars);
-	if (vars->win && vars->mlx)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		vars->win = NULL;
-	}
-	if (vars->mlx)
-	{
-		mlx_destroy_display(vars->mlx);
-		free(vars->mlx);
-		vars->mlx = NULL;
-	}
-}
 
 void	cleanup_all(t_vars *vars)
 {
 	if (!vars)
 		return ;
 	if (vars->points && vars->map)
+	{
 		free_points(vars->map->dim.height, vars->points);
-	vars->points = NULL;
+		vars->points = NULL;
+	}
 	cleanup_image(vars);
 	if (vars->win && vars->mlx)
 	{
@@ -65,7 +48,12 @@ void	cleanup_all(t_vars *vars)
 		free(vars->map);
 		vars->map = NULL;
 	}
-	vars->mlx = NULL;
+	if (vars->mlx)
+    {
+        mlx_destroy_display(vars->mlx);
+        free(vars->mlx);
+        vars->mlx = NULL;
+    }
 }
 
 void	create_image(t_vars *vars)
@@ -73,15 +61,13 @@ void	create_image(t_vars *vars)
 	vars->img = malloc(sizeof(t_image));
 	if (!vars->img)
 	{
-		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		cleanup_all(vars);
 		exit(EXIT_FAILURE);
 	}
 	vars->img->img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	if (!vars->img->img)
 	{
-		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		cleanup_all(vars);
 		exit(EXIT_FAILURE);
 	}
 	vars->img->addr = mlx_get_data_addr(vars->img->img,
@@ -89,8 +75,7 @@ void	create_image(t_vars *vars)
 			&vars->img->endian);
 	if (!vars->img->addr)
 	{
-		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		cleanup_all(vars);
 		exit(EXIT_FAILURE);
 	}
 }

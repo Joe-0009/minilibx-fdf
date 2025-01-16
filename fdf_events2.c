@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:55:17 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/13 12:33:13 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:35:26 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	draw_new_image(t_vars *vars)
 
 int	close_window_x(t_vars *vars)
 {
-	cleanup_image(vars);
-	cleanup_window(vars);
-	free_points(vars->map->dim.height, vars->points);
+	cleanup_all(vars);
 	exit(0);
 	return (0);
 }
@@ -33,9 +31,7 @@ int	close_window_esc(int keycode, t_vars *vars)
 {
 	if (keycode == KEY_ESC)
 	{
-		cleanup_image(vars);
-		cleanup_window(vars);
-		free_points(vars->map->dim.height, vars->points);
+		cleanup_all(vars);
 		exit(0);
 	}
 	return (0);
