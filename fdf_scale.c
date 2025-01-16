@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:14:02 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 14:17:35 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:43:55 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,14 @@ void	calculate_scale(t_map *map)
 	float	scale_y;
 	float	height_factor;
 
-	if (map->scale.zoom_factor == 0)
-		map->scale.zoom_factor = 1.1;
 	max_projected_width = map->dim.width + map->dim.height;
 	height_range = map->height.max - map->height.min;
 	height_factor = calculate_height_factor(map);
-	scale_x = (WIDTH / (max_projected_width * 1.5)) * map->scale.zoom_factor;
-	scale_y = (HEIGHT / ((max_projected_width * sin(0.523599)) + (height_range
-					* height_factor))) * map->scale.zoom_factor;
+	scale_x = (WIDTH / (max_projected_width));
+	scale_y = (HEIGHT / (max_projected_width));
 	if (scale_x < scale_y)
 		map->scale.base = scale_x;
 	else
 		map->scale.base = scale_y;
-	map->scale.base *= 1.1;
 	map->scale.z_scale = map->scale.base * height_factor;
 }

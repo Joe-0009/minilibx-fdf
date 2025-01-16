@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:07 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 11:48:12 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:04:12 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	cleanup_all(t_vars *vars)
 	if (vars->points && vars->map)
 	{
 		free_points(vars->map->dim.height, vars->points);
+		free(vars->bounds);
 		vars->points = NULL;
 	}
 	cleanup_image(vars);
@@ -82,7 +83,7 @@ void	init_fdf(t_vars *vars)
 {
 	parse_map(vars);
 	iso_point(vars);
-	move_map(vars->points, vars->map);
+	move_map(vars);
 	mlx_hooks(vars, vars->window_name);
 	create_image(vars);
 	main_draw(vars);

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:27:40 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 13:29:53 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:03:22 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ void	cleanup_gnl(int fd)
 	}
 }
 
-void	init_vars(t_vars *vars)
+static void	init_vars(t_vars *vars)
 {
 	vars->points = NULL;
 	vars->map = NULL;
 	vars->img = NULL;
 	vars->win = NULL;
 	vars->mlx = NULL;
+	vars->bounds = malloc(sizeof(t_bounds));
+	if (vars->bounds == NULL)
+		ft_error();
 }
 
 int	main(int ac, char **av)
@@ -44,7 +47,7 @@ int	main(int ac, char **av)
 	vars.window_name = av[1];
 	map = malloc(sizeof(t_map));
 	if (!map)
-		return (ft_error(), 1);
+		ft_error();
 	*map = map_dimension(&vars);
 	vars.map = map;
 	points_init(&vars);

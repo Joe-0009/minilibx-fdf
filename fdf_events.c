@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 13:28:50 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:26:39 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@ void	change_projection(t_vars *vars)
 	vars->map->scale.projection = (vars->map->scale.projection + 1) % 4;
 	calculate_scale(vars->map);
 	parse_map(vars);
-	apply_projection(vars);
+	if (vars->map->scale.projection == PARALLEL_SIDE)
+		apply_rotation(vars, 1.57, 'y');
+	else if (vars->map->scale.projection == PARALLEL_TOP)
+	{
+		calculate_scale(vars->map);
+		parse_map(vars);
+		move_map(vars);
+	}
+	else if (vars->map->scale.projection == PARALLEL_FRONT)
+		apply_rotation(vars, 1.57, 'x');
 }
 
 int	handle_movement(int keycode, t_vars *vars)
@@ -56,7 +65,7 @@ int	handle_movement(int keycode, t_vars *vars)
 	{
 		vars->map->center.offset_x = total_offset_x;
 		vars->map->center.offset_y = total_offset_y;
-		move_map(vars->points, vars->map);
+		move_map(vars);
 		draw_new_image(vars);
 	}
 	return (0);
@@ -79,5 +88,5 @@ int	zoom_in_and_out(int keycode, t_vars *vars)
 void	iso_point(t_vars *vars)
 {
 	apply_rotation(vars, 0.785398, 'z');
-	apply_rotation(vars, 0.95, 'x');
+	apply_rotation(vars, 0.955316618, 'x');
 }

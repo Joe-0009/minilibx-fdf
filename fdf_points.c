@@ -6,19 +6,19 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:34:09 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 12:54:31 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:54:09 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	calculate_color(int height, t_height_range *range, int color)
+int	calculate_color(int height, t_height_range range, int color)
 {
 	float	height_percent;
 
 	if (height == 0)
 		return (color);
-	height_percent = (float)(height - range->min) / (range->max - range->min
+	height_percent = (float)(height - range.min) / (range.max - range.min
 			+ 0.1);
 	return (0xFFFFFF - (int)(height_percent * 0x00FFFF));
 }
@@ -29,13 +29,13 @@ static void	create_point(t_point *point, t_vars *vars, char **color_split,
 	int	height;
 
 	height = ft_atoi(color_split[0], vars);
-	point->x = context->j * context->map->scale.base;
-	point->y = context->i * context->map->scale.base;
-	point->z = height * context->map->scale.z_scale;
+	point->x = context->j * vars->map->scale.base;
+	point->y = context->i * vars->map->scale.base;
+	point->z = height * vars->map->scale.z_scale;
 	if (color_split[1])
 		point->color = ft_atoi_base(color_split[1] + 2, 16);
 	else
-		point->color = calculate_color(height, &context->map->height, 0x0000FF);
+		point->color = calculate_color(height, vars->map->height, 0x0000FF);
 }
 
 static void	parse_line(char *line, t_point **points, t_vars *vars,
@@ -75,7 +75,6 @@ void	parse_map(t_vars *vars)
 
 	find_height_range(vars);
 	calculate_scale(vars->map);
-	context.map = vars->map;
 	context.i = 0;
 	fd = open(vars->window_name, O_RDONLY);
 	line = get_next_line(fd);
