@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:59 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 14:17:20 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:19:58 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ static int	process_height(char *str, t_vars *vars)
 	return (0);
 }
 
-static void	clean_height_data(t_vars *vars, int fd)
-{
-	cleanup_gnl(fd);
-	cleanup_all(vars);
-	ft_error();
-}
-
 static void	process_line_heights(char **split, t_vars *vars, char *line, int fd)
 {
 	int		i;
@@ -53,7 +46,9 @@ static void	process_line_heights(char **split, t_vars *vars, char *line, int fd)
 			ft_free_strs(color_split);
 			ft_free_strs(split);
 			free(line);
-			clean_height_data(vars, fd);
+			cleanup_gnl(fd);
+			cleanup_all(vars);
+			ft_error();
 		}
 		ft_free_strs(color_split);
 	}

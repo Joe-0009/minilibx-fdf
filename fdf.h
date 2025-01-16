@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 14:07:44 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:26:18 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,9 @@ void				change_projection(t_vars *vars);
 void				mlx_hooks(t_vars *vars, char *str);
 int					handle_movement(int keycode, t_vars *vars);
 int					zoom_in_and_out(int keycode, t_vars *vars);
-int					rotate(int keycode, t_vars *vars);
+void				determine_rotation_control(int keycode, t_vars *vars,
+						float *angle, char *axis);
+int					handle_rotation(int keycode, t_vars *vars);
 
 // Utility functions
 int					ft_words_count(char const *s, char c);

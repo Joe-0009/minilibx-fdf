@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:15:41 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/15 14:05:37 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:29:13 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,11 @@ void	move_map(t_point **points, t_map *map)
 	}
 }
 
-void	update_zoom(t_vars *vars, float zoom_delta)
+static void	apply_zoom_to_points(t_vars *vars, float scale_factor)
 {
-	t_bounds	bounds;
-	int			i;
-	int			j;
-	float		new_zoom_factor;
-	float		scale_factor;
+	int	i;
+	int	j;
 
-	find_map_boundaries(vars->points, vars->map, &bounds);
-	new_zoom_factor = vars->map->scale.zoom_factor * zoom_delta;
-	if (new_zoom_factor < 0.1)
-		new_zoom_factor = 0.1;
-	if (new_zoom_factor > 10.0)
-		new_zoom_factor = 10.0;
-	scale_factor = new_zoom_factor / vars->map->scale.zoom_factor;
-	vars->map->scale.zoom_factor = new_zoom_factor;
 	i = -1;
 	while (++i < vars->map->dim.height)
 	{
@@ -93,57 +82,22 @@ void	update_zoom(t_vars *vars, float zoom_delta)
 			vars->points[i][j].z *= scale_factor;
 		}
 	}
+}
+
+void	update_zoom(t_vars *vars, float zoom_delta)
+{
+	t_bounds	bounds;
+	float		new_zoom_factor;
+	float		scale_factor;
+
+	find_map_boundaries(vars->points, vars->map, &bounds);
+	new_zoom_factor = vars->map->scale.zoom_factor * zoom_delta;
+	if (new_zoom_factor < 0.1)
+		new_zoom_factor = 0.1;
+	if (new_zoom_factor > 10.0)
+		new_zoom_factor = 10.0;
+	scale_factor = new_zoom_factor / vars->map->scale.zoom_factor;
+	vars->map->scale.zoom_factor = new_zoom_factor;
+	apply_zoom_to_points(vars, scale_factor);
 	move_map(vars->points, vars->map);
-}
-
-void	determine_rotation(int keycode, t_vars *vars, float *angle, char *axis)
-{
-	*angle = 0.1;
-	if (keycode == KEY_W)
-	{
-		*axis = 'x';
-		vars->current_rotation_angle = -*angle;
-	}
-	else if (keycode == KEY_S)
-	{
-		*axis = 'x';
-		vars->current_rotation_angle = *angle;
-	}
-	else if (keycode == KEY_A)
-	{
-		*axis = 'y';
-		vars->current_rotation_angle = -*angle;
-	}
-	else if (keycode == KEY_D)
-	{
-		*axis = 'y';
-		vars->current_rotation_angle = *angle;
-	}
-	else if (keycode == KEY_Q)
-	{
-		*axis = 'z';
-		vars->current_rotation_angle = -*angle;
-	}
-	else if (keycode == KEY_E)
-	{
-		*axis = 'z';
-		vars->current_rotation_angle = *angle;
-	}
-	else
-		*axis = '\0';
-}
-
-int	rotate(int keycode, t_vars *vars)
-{
-	float	angle;
-	char	axis;
-
-	determine_rotation(keycode, vars, &angle, &axis);
-	if (axis == '\0')
-		return (0);
-	vars->current_rotation_axis = axis;
-	apply_rotation(vars, vars->current_rotation_angle,
-		vars->current_rotation_axis);
-	draw_new_image(vars);
-	return (0);
 }

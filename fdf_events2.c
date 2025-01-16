@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:55:17 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 11:35:26 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:27:46 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	key_handler(int keycode, t_vars *vars)
 	else if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A
 		|| keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E
 		|| keycode == KEY_I)
-		rotate(keycode, vars);
+		handle_rotation(keycode, vars);
 	return (0);
 }
 

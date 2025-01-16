@@ -19,6 +19,7 @@ SRCS = main.c \
        fdf_events2.c \
        fdf_rotation.c \
        fdf_scale.c \
+       fdf_rotation_control.c \
        ft_atoi_base.c \
        get_next_line/get_next_line.c \
        get_next_line/get_next_line_utils.c
