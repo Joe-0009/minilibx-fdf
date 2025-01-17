@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 18:09:05 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:22:44 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,11 +174,11 @@ void				update_zoom(t_vars *vars, float zoom_factor);
 void				iso_point(t_vars *vars);
 
 // Rotation
-void	rotate_point(t_point *point, float angle, char axis);
+void				rotate_point(t_point *point, float angle, char axis);
 void				apply_rotation(t_vars *vars, float angle, char axis);
 
 // Parallel
-void	apply_projection(t_vars *vars, float angle, char axis);
+void				apply_projection(t_vars *vars, float angle, char axis);
 
 // Drawing operations
 int					interpolate_color(int color1, int color2, float fraction);
