@@ -6,10 +6,9 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:54:05 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/17 11:53:39 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:03:08 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "fdf.h"
 
@@ -55,8 +54,8 @@ void	rotate_point(t_point *point, float angle, char axis)
 		rotate_y_axis(&x, &z, angle);
 	else
 		rotate_z_axis(&x, &y, angle);
-	point->x = (x);
-	point->y = (y);
+	point->x = x;
+	point->y = y;
 	point->z = z;
 }
 

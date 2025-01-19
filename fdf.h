@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/17 11:22:44 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:14:29 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@
 /*
 ** Type definitions
 */
-typedef enum e_projection
-{
-	PARALLEL_TOP,
-	PARALLEL_FRONT,
-	PARALLEL_SIDE
-}					t_projection;
 
 // Geometry structures
 typedef struct s_point
@@ -92,7 +86,7 @@ typedef struct s_scale
 	float			base;
 	float			z_scale;
 	float			zoom_factor;
-	t_projection	projection;
+	int				projection;
 }					t_scale;
 
 typedef struct s_offset
@@ -176,9 +170,6 @@ void				iso_point(t_vars *vars);
 // Rotation
 void				rotate_point(t_point *point, float angle, char axis);
 void				apply_rotation(t_vars *vars, float angle, char axis);
-
-// Parallel
-void				apply_projection(t_vars *vars, float angle, char axis);
 
 // Drawing operations
 int					interpolate_color(int color1, int color2, float fraction);

@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 13:26:48 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:11:59 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	map_init(t_map *map)
 	map->dim.width = 0;
 	map->dim.height = 0;
 	map->scale.zoom_factor = 1.1;
-	map->scale.projection = PARALLEL_TOP;
+	map->scale.projection = 0;
 	map->scale.base = 0;
 	map->scale.z_scale = 0;
 	map->center.x = 0;

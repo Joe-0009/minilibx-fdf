@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:08 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 18:26:39 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:12:16 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ void	reset_shape(int keycode, t_vars *vars, int *total_offset_x,
 
 void	change_projection(t_vars *vars)
 {
-	vars->map->scale.projection = (vars->map->scale.projection + 1) % 4;
+	vars->map->scale.projection = (vars->map->scale.projection + 1) % 3;
 	calculate_scale(vars->map);
 	parse_map(vars);
-	if (vars->map->scale.projection == PARALLEL_SIDE)
+	if (vars->map->scale.projection == 0)
 		apply_rotation(vars, 1.57, 'y');
-	else if (vars->map->scale.projection == PARALLEL_TOP)
+	else if (vars->map->scale.projection == 1)
 	{
 		calculate_scale(vars->map);
 		parse_map(vars);
 		move_map(vars);
 	}
-	else if (vars->map->scale.projection == PARALLEL_FRONT)
+	else if (vars->map->scale.projection == 2)
 		apply_rotation(vars, 1.57, 'x');
 }
 
