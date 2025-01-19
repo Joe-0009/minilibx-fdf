@@ -6,43 +6,49 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:34:09 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/19 11:47:33 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/19 14:42:28 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	calculate_color(int height, t_height_range range, int color)
+int	calculate_color(int height, t_height_range range)
 {
 	float	height_percent;
 
-	if (height == 0)
-		return (color);
+	if (height == range.min)
+		return (0x00008B);
+	if (height == range.max)
+		return (0xFFFFFF);
 	if (range.max == range.min)
-		return (color);
+		return (0xFFFFFF);
 	height_percent = (float)(height - range.min) / (range.max - range.min);
-	if (height_percent < 0)
-		height_percent = 0;
-	if (height_percent > 1)
-		height_percent = 1;
-	return (0xFFFFFF - (int)(height_percent * 0x00FFFF));
+	if (height_percent < 0.25)
+		return (interpolate_color(0x00008B, 0x228B22, height_percent * 4));
+	else if (height_percent < 0.5)
+		return (interpolate_color(0x228B22, 0x8B4513, (height_percent - 0.25)
+				* 4));
+	else if (height_percent < 0.75)
+		return (interpolate_color(0x8B4513, 0xD3D3D3, (height_percent - 0.5)
+				* 4));
+	else
+		return (interpolate_color(0xD3D3D3, 0xFFFFFF, (height_percent - 0.75)
+				* 4));
 }
 
 static void	create_point(t_vars *vars, char **color_split,
 		t_map_context *context)
 {
 	int		height;
-	t_point	*point;
-
-	point = &vars->points[context->i][context->j];
+	
 	height = ft_atoi(color_split[0], vars);
-	point->x = context->j * vars->map->scale.base;
-	point->y = context->i * vars->map->scale.base;
-	point->z = height * vars->map->scale.z_scale;
+	vars->points[context->i][context->j].x = context->j * vars->map->scale.base;
+	vars->points[context->i][context->j].y = context->i * vars->map->scale.base;
+	vars->points[context->i][context->j].z = height * vars->map->scale.z_scale;
 	if (color_split[1])
-		point->color = ft_atoi_base(color_split[1] + 2, 16);
+		vars->points[context->i][context->j].color = ft_atoi_base(color_split[1] + 2, 16);
 	else
-		point->color = calculate_color(height, vars->map->height, 0x0000FF);
+		vars->points[context->i][context->j].color = calculate_color(height, vars->map->height);
 }
 
 static void	parse_line(char *line, t_vars *vars, t_map_context *context)
