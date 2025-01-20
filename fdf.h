@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:11:45 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/19 13:08:51 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/20 10:44:59 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,10 @@ void				create_image(t_vars *vars);
 void				cleanup_all(t_vars *vars);
 
 // Map operations and scaling
-int					open_map_file(char *file_name);
+int					open_map_file(t_vars *vars);
 void				calculate_scale(t_map *map);
 void				find_height_range(t_vars *vars);
-t_map				map_dimension(t_vars *vars);
+void				map_dimension(t_vars *vars);
 
 // Transformations and movement
 void				move_map(t_vars *vars);
@@ -180,7 +180,7 @@ void				draw_line(t_vars *vars, t_point a, t_point b);
 
 // Event handling
 void				change_projection(t_vars *vars);
-void				mlx_hooks(t_vars *vars, char *str);
+void				mlx_hooks(t_vars *vars);
 int					handle_movement(int keycode, t_vars *vars);
 int					zoom_in_and_out(int keycode, t_vars *vars);
 void				determine_rotation_control(int keycode, t_vars *vars,

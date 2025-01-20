@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:59 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 14:19:58 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/19 20:00:44 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	find_height_range(t_vars *vars)
 	char	*line;
 	char	**split;
 
-	fd = open_map_file(vars->window_name);
+	fd = open_map_file(vars);
 	line = get_next_line(fd);
 	while (line)
 	{

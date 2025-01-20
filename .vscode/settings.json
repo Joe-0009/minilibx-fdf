@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "mlx.h": "c"
+        "mlx.h": "c",
+        "map": "c",
+        "format": "c"
     },
     "makefile.configureOnOpen": false
 }

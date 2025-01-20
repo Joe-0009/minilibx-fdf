@@ -6,61 +6,74 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:14:25 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/18 13:11:59 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:10:09 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	open_map_file(char *filename)
+int	open_map_file(t_vars *vars)
 {
 	int	fd;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(vars->window_name, O_RDONLY);
 	if (fd < 0)
+	{
+		cleanup_all(vars);
 		ft_error();
+	}
 	return (fd);
 }
 
-static void	map_init(t_map *map)
+void	cleanup_gnl(int fd)
 {
-	map->dim.width = 0;
-	map->dim.height = 0;
-	map->scale.zoom_factor = 1.1;
-	map->scale.projection = 0;
-	map->scale.base = 0;
-	map->scale.z_scale = 0;
-	map->center.x = 0;
-	map->center.y = 0;
-	map->center.offset_x = 0;
-	map->center.offset_y = 0;
-	map->height.min = INT_MAX;
-	map->height.max = INT_MIN;
+	char	*dummy;
+
+	dummy = get_next_line(fd);
+	while (dummy)
+	{
+		free(dummy);
+		dummy = get_next_line(fd);
+	}
 }
 
-t_map	map_dimension(t_vars *vars)
+static void	map_init(t_vars *vars)
 {
-	t_map	map;
+	vars->map->dim.width = 0;
+	vars->map->dim.height = 0;
+	vars->map->scale.zoom_factor = 1.1;
+	vars->map->scale.projection = 0;
+	vars->map->scale.base = 0;
+	vars->map->scale.z_scale = 0;
+	vars->map->center.x = 0;
+	vars->map->center.y = 0;
+	vars->map->center.offset_x = 0;
+	vars->map->center.offset_y = 0;
+	vars->map->height.min = INT_MAX;
+	vars->map->height.max = INT_MIN;
+}
+
+void	map_dimension(t_vars *vars)
+{
 	int		fd;
 	char	*line;
 	int		height;
 	int		width;
 
+	fd = open_map_file(vars);
 	width = INT_MIN;
-	map_init(&map);
+	map_init(vars);
 	height = 0;
-	fd = open_map_file(vars->window_name);
 	line = get_next_line(fd);
 	while (line)
 	{
 		width = ft_words_count(line, ' ');
-		if (width > map.dim.width)
-			map.dim.width = width;
+		if (width > vars->map->dim.width)
+			vars->map->dim.width = width;
 		height++;
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	map.dim.height = height;
-	return (map);
+	vars->map->dim.height = height;
 }

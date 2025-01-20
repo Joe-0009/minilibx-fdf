@@ -6,7 +6,7 @@
 /*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:55:17 by yrachidi          #+#    #+#             */
-/*   Updated: 2025/01/16 14:27:46 by yrachidi         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:47:52 by yrachidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ int	key_handler(int keycode, t_vars *vars)
 	return (0);
 }
 
-void	mlx_hooks(t_vars *vars, char *str)
+void	mlx_hooks(t_vars *vars)
 {
-	vars->window_name = str;
 	mlx_hook(vars->win, 2, 1L << 0, key_handler, vars);
 	mlx_hook(vars->win, 17, 0, close_window_x, vars);
 }
